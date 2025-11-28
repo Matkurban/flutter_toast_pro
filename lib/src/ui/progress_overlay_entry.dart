@@ -22,33 +22,34 @@ OverlayEntry progressOverlayEntry({
         overlayChildBuilder: (context) {
           return ValueStreamBuilder(
             stream: ToastEvent.showMessages,
-            builder: (BuildContext context, ToastDataModel value, Widget? child) {
-              if (value.type == ToastType.progress) {
-                return IgnorePointer(
-                  ignoring: ignoring,
-                  child: Container(
-                    width: size.width,
-                    height: size.height,
-                    color: overlayColor,
-                    child:
-                        builder?.call(
-                          context,
-                          value.progress ?? 0,
-                          value.message,
-                          value.alignment,
-                          value.extra,
-                        ) ??
-                        DefaultProgressWidget(
-                          progress: value.progress,
-                          message: value.message,
-                          alignment: value.alignment,
-                        ),
-                  ),
-                );
-              } else {
-                return SizedBox.shrink();
-              }
-            },
+            builder:
+                (BuildContext context, ToastDataModel value, Widget? child) {
+                  if (value.type == ToastType.progress) {
+                    return IgnorePointer(
+                      ignoring: ignoring,
+                      child: Container(
+                        width: size.width,
+                        height: size.height,
+                        color: overlayColor,
+                        child:
+                            builder?.call(
+                              context,
+                              value.progress ?? 0,
+                              value.message,
+                              value.alignment,
+                              value.extra,
+                            ) ??
+                            DefaultProgressWidget(
+                              progress: value.progress,
+                              message: value.message,
+                              alignment: value.alignment,
+                            ),
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
           );
         },
       );

@@ -41,7 +41,10 @@ class DefaultMessageWidget extends StatelessWidget {
       alignment: alignment,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadiusGeometry.circular(10)),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadiusGeometry.circular(10),
+        ),
         child: Text(message, style: TextStyle(color: textColor)),
       ),
     );

@@ -22,35 +22,36 @@ OverlayEntry messageOverlayEntry({
         overlayChildBuilder: (context) {
           return ValueStreamBuilder(
             stream: ToastEvent.showMessages,
-            builder: (BuildContext context, ToastDataModel value, Widget? child) {
-              if (value.type == ToastType.message) {
-                return IgnorePointer(
-                  ignoring: ignoring,
-                  child: Container(
-                    width: size.width,
-                    height: size.height,
-                    color: overlayColor,
-                    child: SafeArea(
-                      child:
-                          builder?.call(
-                            context,
-                            value.message ?? "",
-                            value.messageType,
-                            value.alignment,
-                            value.extra,
-                          ) ??
-                          DefaultMessageWidget(
-                            message: value.message ?? "",
-                            type: value.messageType,
-                            alignment: value.alignment,
-                          ),
-                    ),
-                  ),
-                );
-              } else {
-                return SizedBox.shrink();
-              }
-            },
+            builder:
+                (BuildContext context, ToastDataModel value, Widget? child) {
+                  if (value.type == ToastType.message) {
+                    return IgnorePointer(
+                      ignoring: ignoring,
+                      child: Container(
+                        width: size.width,
+                        height: size.height,
+                        color: overlayColor,
+                        child: SafeArea(
+                          child:
+                              builder?.call(
+                                context,
+                                value.message ?? "",
+                                value.messageType,
+                                value.alignment,
+                                value.extra,
+                              ) ??
+                              DefaultMessageWidget(
+                                message: value.message ?? "",
+                                type: value.messageType,
+                                alignment: value.alignment,
+                              ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
           );
         },
       );

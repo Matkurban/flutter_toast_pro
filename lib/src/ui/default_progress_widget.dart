@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DefaultProgressWidget extends StatelessWidget {
-  const DefaultProgressWidget({super.key, required this.progress, this.message, this.alignment});
+  const DefaultProgressWidget({
+    super.key,
+    required this.progress,
+    this.message,
+    this.alignment,
+  });
 
   final double? progress;
 

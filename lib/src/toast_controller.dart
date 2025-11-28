@@ -119,7 +119,12 @@ sealed class FlutterToastPro {
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
-      ToastDataModel(type: ToastType.loading, message: message, alignment: alignment, extra: extra),
+      ToastDataModel(
+        type: ToastType.loading,
+        message: message,
+        alignment: alignment,
+        extra: extra,
+      ),
     );
   }
 

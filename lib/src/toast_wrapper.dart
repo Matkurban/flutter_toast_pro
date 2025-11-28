@@ -86,9 +86,15 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
   @override
   void initState() {
     super.initState();
-    messageOverlayController = OverlayPortalController(debugLabel: "flutter_toast_message");
-    progressOverlayController = OverlayPortalController(debugLabel: "flutter_toast_progress");
-    loadingOverlayController = OverlayPortalController(debugLabel: "flutter_toast_loading");
+    messageOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_message",
+    );
+    progressOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_progress",
+    );
+    loadingOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_loading",
+    );
     ToastEvent.showMessages.listen(_showEventListen);
     ToastEvent.hideMessages.listen(_hideEventListen);
   }
@@ -103,17 +109,23 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
               if (closeTimer != null && closeTimer!.isActive) {
                 closeTimer!.cancel();
                 closeTimer = null;
-                closeTimer = Timer((data.closeDuration ?? widget.closeDuration), () {
-                  ToastEvent.showMessages.add(ToastDataModel.empty());
-                  messageOverlayController.hide();
-                  closeTimer = null;
-                });
+                closeTimer = Timer(
+                  (data.closeDuration ?? widget.closeDuration),
+                  () {
+                    ToastEvent.showMessages.add(ToastDataModel.empty());
+                    messageOverlayController.hide();
+                    closeTimer = null;
+                  },
+                );
               } else {
-                closeTimer = Timer((data.closeDuration ?? widget.closeDuration), () {
-                  ToastEvent.showMessages.add(ToastDataModel.empty());
-                  messageOverlayController.hide();
-                  closeTimer = null;
-                });
+                closeTimer = Timer(
+                  (data.closeDuration ?? widget.closeDuration),
+                  () {
+                    ToastEvent.showMessages.add(ToastDataModel.empty());
+                    messageOverlayController.hide();
+                    closeTimer = null;
+                  },
+                );
               }
             }
           }
