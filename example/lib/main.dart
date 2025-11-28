@@ -12,6 +12,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterToastProWrapper(
       autoClose: true,
+      loadingIgnoring: false,
+      messageIgnoring: true,
+      progressIgnoring: false,
+      loadingOverlayColor: Colors.red.withValues(alpha: 0.1),
+      progressOverlayColor: Colors.amber.withValues(alpha: 0.1),
+      messageOverlayColor: Colors.blueAccent.withValues(alpha: 0.1),
       messageBuilder: (context, message, type, alignment, extra) {
         return Container(
           alignment: alignment,
@@ -45,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    debugPrint("Home Build");
     return Scaffold(
       appBar: AppBar(title: Text("Flutter Toast Demo")),
       body: SizedBox(
@@ -94,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
             FilledButton(
               onPressed: () async {
                 for (int i = 0; i <= 100; i++) {
-                  await Future.delayed(Duration(milliseconds: 100));
+                  await Future.delayed(Duration(milliseconds: 10));
                   FlutterToastPro.showProgress(i / 100);
                 }
                 FlutterToastPro.hideProgress();

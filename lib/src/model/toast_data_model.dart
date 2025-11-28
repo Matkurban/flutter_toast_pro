@@ -36,6 +36,6 @@ class ToastDataModel {
   });
 
   factory ToastDataModel.empty() {
-    return ToastDataModel(type: ToastType.message);
+    return ToastDataModel(type: ToastType.none);
   }
 }

@@ -3,13 +3,16 @@ import 'package:rxdart_flutter/rxdart_flutter.dart';
 
 import '../model/toast_data_model.dart';
 import '../model/toast_type.dart';
-import '../toast_event.dart';
 import '../statement.dart';
+import '../toast_event.dart';
 import 'default_progress_widget.dart';
 
 OverlayEntry progressOverlayEntry({
   required OverlayPortalController controller,
   ToastProgressBuilder? builder,
+  required Color overlayColor,
+  required bool ignoring,
+  required Size size,
 }) {
   return OverlayEntry(
     builder: (BuildContext context) {
@@ -17,12 +20,16 @@ OverlayEntry progressOverlayEntry({
         controller: controller,
         overlayLocation: OverlayChildLocation.rootOverlay,
         overlayChildBuilder: (context) {
-          return IgnorePointer(
-            child: ValueStreamBuilder(
-              stream: ToastEvent.showMessages,
-              builder: (BuildContext context, ToastDataModel value, Widget? child) {
-                if (value.type == ToastType.progress) {
-                  return SafeArea(
+          return ValueStreamBuilder(
+            stream: ToastEvent.showMessages,
+            builder: (BuildContext context, ToastDataModel value, Widget? child) {
+              if (value.type == ToastType.progress) {
+                return IgnorePointer(
+                  ignoring: ignoring,
+                  child: Container(
+                    width: size.width,
+                    height: size.height,
+                    color: overlayColor,
                     child:
                         builder?.call(
                           context,
@@ -36,12 +43,12 @@ OverlayEntry progressOverlayEntry({
                           message: value.message,
                           alignment: value.alignment,
                         ),
-                  );
-                } else {
-                  return SizedBox.shrink();
-                }
-              },
-            ),
+                  ),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            },
           );
         },
       );

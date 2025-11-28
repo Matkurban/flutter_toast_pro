@@ -1,4 +1,6 @@
 enum ToastType {
+  none,
+
   ///消息
   message,
 
