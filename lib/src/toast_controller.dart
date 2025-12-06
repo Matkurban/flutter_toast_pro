@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'model/message_type.dart';
+import '../flutter_toast_pro.dart';
 import 'model/toast_data_model.dart';
 import 'toast_event.dart';
 import 'model/toast_type.dart';
@@ -11,14 +10,16 @@ sealed class FlutterToastPro {
     String message, {
     Duration? closeDuration,
     MessageType type = MessageType.info,
-    AlignmentGeometry alignment = Alignment.topCenter,
+    EffectType? effectType,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
       ToastDataModel(
-        type: ToastType.message,
+        type: .message,
         message: message,
         messageType: type,
+        effectType: effectType,
         closeDuration: closeDuration,
         alignment: alignment,
         extra: extra,
@@ -30,14 +31,16 @@ sealed class FlutterToastPro {
   static void showSuccessMessage(
     String message, {
     Duration? closeDuration,
-    AlignmentGeometry alignment = Alignment.topCenter,
+    EffectType? effectType,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
       ToastDataModel(
-        type: ToastType.message,
+        type: .message,
         message: message,
-        messageType: MessageType.success,
+        messageType: .success,
+        effectType: effectType,
         closeDuration: closeDuration,
         alignment: alignment,
         extra: extra,
@@ -49,14 +52,16 @@ sealed class FlutterToastPro {
   static void showWaringMessage(
     String message, {
     Duration? closeDuration,
-    AlignmentGeometry alignment = Alignment.topCenter,
+    EffectType? effectType,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
       ToastDataModel(
-        type: ToastType.message,
+        type: .message,
         message: message,
-        messageType: MessageType.warning,
+        messageType: .warning,
+        effectType: effectType,
         closeDuration: closeDuration,
         alignment: alignment,
         extra: extra,
@@ -68,14 +73,16 @@ sealed class FlutterToastPro {
   static void showErrorMessage(
     String message, {
     Duration? closeDuration,
-    AlignmentGeometry alignment = Alignment.topCenter,
+    EffectType? effectType,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
       ToastDataModel(
-        type: ToastType.message,
+        type: .message,
         message: message,
-        messageType: MessageType.error,
+        messageType: .error,
+        effectType: effectType,
         closeDuration: closeDuration,
         alignment: alignment,
         extra: extra,
@@ -93,12 +100,12 @@ sealed class FlutterToastPro {
   static void showProgress(
     double progress, {
     String? message,
-    AlignmentGeometry alignment = Alignment.center,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
       ToastDataModel(
-        type: ToastType.progress,
+        type: .progress,
         message: message,
         progress: progress,
         alignment: alignment,
@@ -115,16 +122,11 @@ sealed class FlutterToastPro {
   ///显示加载中
   static void showLoading({
     String? message,
-    AlignmentGeometry alignment = Alignment.center,
+    Alignment? alignment,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     ToastEvent.showMessages.add(
-      ToastDataModel(
-        type: ToastType.loading,
-        message: message,
-        alignment: alignment,
-        extra: extra,
-      ),
+      ToastDataModel(type: .loading, message: message, alignment: alignment, extra: extra),
     );
   }
 

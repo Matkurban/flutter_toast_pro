@@ -13,41 +13,41 @@ OverlayEntry loadingOverlayEntry({
   required Color overlayColor,
   required bool ignoring,
   required Size size,
+  required Alignment defaultAlignment,
 }) {
   return OverlayEntry(
     builder: (BuildContext context) {
       return OverlayPortal(
         controller: controller,
-        overlayLocation: OverlayChildLocation.rootOverlay,
+        overlayLocation: .rootOverlay,
         overlayChildBuilder: (context) {
           return ValueStreamBuilder(
             stream: ToastEvent.showMessages,
-            builder:
-                (BuildContext context, ToastDataModel value, Widget? child) {
-                  if (value.type == ToastType.loading) {
-                    return IgnorePointer(
-                      ignoring: ignoring,
-                      child: Container(
-                        color: overlayColor,
-                        width: size.width,
-                        height: size.height,
-                        child:
-                            builder?.call(
-                              context,
-                              value.message,
-                              value.alignment,
-                              value.extra,
-                            ) ??
-                            DefaultLoadingWidget(
-                              message: value.message,
-                              alignment: value.alignment,
-                            ),
-                      ),
-                    );
-                  } else {
-                    return SizedBox.shrink();
-                  }
-                },
+            builder: (BuildContext context, ToastDataModel value, Widget? child) {
+              if (value.type == ToastType.loading) {
+                return IgnorePointer(
+                  ignoring: ignoring,
+                  child: Container(
+                    color: overlayColor,
+                    width: size.width,
+                    height: size.height,
+                    child:
+                        builder?.call(
+                          context: context,
+                          message: value.message,
+                          alignment: value.alignment ?? defaultAlignment,
+                          extra: value.extra,
+                        ) ??
+                        DefaultLoadingWidget(
+                          message: value.message,
+                          alignment: value.alignment ?? defaultAlignment,
+                        ),
+                  ),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            },
           );
         },
       );

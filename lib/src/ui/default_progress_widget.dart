@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DefaultProgressWidget extends StatelessWidget {
-  const DefaultProgressWidget({
-    super.key,
-    required this.progress,
-    this.message,
-    this.alignment,
-  });
+  const DefaultProgressWidget({super.key, required this.progress, this.message, this.alignment});
 
   final double? progress;
 
@@ -28,13 +23,15 @@ class DefaultProgressWidget extends StatelessWidget {
           borderRadius: BorderRadiusGeometry.circular(10),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             SizedBox(
               width: 48,
               height: 48,
               child: CircularProgressIndicator(
                 value: progress,
+                color: Color(0xFF1f65f3),
+                backgroundColor: Color(0xFF1f65f3).withValues(alpha: 0.3),
                 constraints: BoxConstraints(maxHeight: 48, maxWidth: 48),
               ),
             ),

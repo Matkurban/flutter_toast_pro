@@ -1,3 +1,4 @@
+import 'package:example/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_toast_pro/flutter_toast_pro.dart';
 
@@ -11,37 +12,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterToastProWrapper(
-      autoClose: true,
-      loadingIgnoring: false,
-      messageIgnoring: true,
-      progressIgnoring: false,
-      loadingOverlayColor: Colors.red.withValues(alpha: 0.1),
-      progressOverlayColor: Colors.amber.withValues(alpha: 0.1),
-      messageOverlayColor: Colors.blueAccent.withValues(alpha: 0.1),
-      messageBuilder: (context, message, type, alignment, extra) {
-        return Container(
-          alignment: alignment,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Text(message),
-          ),
-        );
-      },
-      closeDuration: Duration(seconds: 5),
+      effectType: EffectType.primaryLight,
       child: MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.light,
+        home: const MyHomePage(),
+        /* builder: (context, child) {
+          return FlutterToastProWrapper(child: child ?? SizedBox.shrink());
+        },*/
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -53,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var size = MediaQuery.sizeOf(context);
     debugPrint("Home Build");
     return Scaffold(
-      appBar: AppBar(title: Text("Flutter Toast Demo")),
+      appBar: AppBar(title: Text("Toast")),
       body: SizedBox(
         width: size.width,
         child: Column(
@@ -62,33 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showMessage("Info");
+                FlutterToastPro.showMessage("显示info消息");
               },
               child: Text("显示info消息"),
             ),
+
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showWaringMessage("Warning");
+                FlutterToastPro.showWaringMessage("显示Warning消息");
               },
               child: Text("显示Warning消息"),
             ),
 
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showSuccessMessage("Success");
+                FlutterToastPro.showSuccessMessage("显示Success消息");
               },
               child: Text("显示Success消息"),
             ),
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showErrorMessage("Error");
+                FlutterToastPro.showErrorMessage("显示Error消息");
               },
               child: Text("显示Error消息"),
             ),
 
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showLoading();
+                FlutterToastPro.showLoading(message: "加载中...");
               },
               child: Text("显示加载中"),
             ),
@@ -102,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async {
                 for (int i = 0; i <= 100; i++) {
                   await Future.delayed(Duration(milliseconds: 10));
-                  FlutterToastPro.showProgress(i / 100);
+                  FlutterToastPro.showProgress(i / 100, message: "$i%");
                 }
                 FlutterToastPro.hideProgress();
               },

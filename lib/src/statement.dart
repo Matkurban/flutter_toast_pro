@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_toast_pro/src/model/effect_type.dart';
 import 'model/message_type.dart';
 
 ///显示消息的声明
@@ -6,13 +7,14 @@ import 'model/message_type.dart';
 ///[extra] 扩展数据
 ///只用于普通消息
 typedef ToastMessageBuilder =
-    Widget Function(
+    Widget Function({
       BuildContext context,
       String message,
       MessageType type,
-      AlignmentGeometry alignment,
+      EffectType effectType,
+      Alignment alignment,
       Map<String, dynamic> extra,
-    );
+    });
 
 ///显示进度消息的声明
 ///[message] 加载中消息的内容
@@ -20,22 +22,22 @@ typedef ToastMessageBuilder =
 ///[extra] 扩展数据
 ///只用于进度消息
 typedef ToastProgressBuilder =
-    Widget Function(
+    Widget Function({
       BuildContext context,
       double progress,
       String? message,
-      AlignmentGeometry alignment,
+      Alignment alignment,
       Map<String, dynamic> extra,
-    );
+    });
 
 ///显示加载中的声明
 ///[message] 消息的内容
 ///[extra] 扩展数据
 ///只用于加载中消息
 typedef ToastLoadingBuilder =
-    Widget Function(
+    Widget Function({
       BuildContext context,
       String? message,
-      AlignmentGeometry alignment,
+      Alignment alignment,
       Map<String, dynamic> extra,
-    );
+    });
