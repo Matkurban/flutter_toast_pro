@@ -137,22 +137,22 @@ FlutterToastProWrapper(
 
 ### Message 消息
 
-| type    | EffectType.primaryLight                            | EffectType.primary                                 |
-|---------|----------------------------------------------------|----------------------------------------------------|
-| info    | ![](doc/screenshot/Screenshot_20251206_210249.jpg) | ![](doc/screenshot/Screenshot_20251206_210127.jpg) |
-| success | ![](doc/screenshot/Screenshot_20251206_210133.jpg) | ![](doc/screenshot/Screenshot_20251206_210254.jpg) |
-| waring  | ![](doc/screenshot/Screenshot_20251206_210130.jpg) | ![](doc/screenshot/Screenshot_20251206_210252.jpg) |
-| error   | ![](doc/screenshot/Screenshot_20251206_210136.jpg) | ![](doc/screenshot/Screenshot_20251206_210257.jpg) |
+| type    | EffectType.primaryLight                                                                 | EffectType.primary                                                                |
+|---------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| info    | <img src="doc/screenshot/Screenshot_20251206_210249.jpg" alt="info primary light" />    | <img src="doc/screenshot/Screenshot_20251206_210127.jpg" alt="info primary" />    |
+| success | <img src="doc/screenshot/Screenshot_20251206_210133.jpg" alt="success primary light" /> | <img src="doc/screenshot/Screenshot_20251206_210254.jpg" alt="success primary" /> |
+| waring  | <img src="doc/screenshot/Screenshot_20251206_210130.jpg" alt="warning primary light" /> | <img src="doc/screenshot/Screenshot_20251206_210252.jpg" alt="warning primary" /> |
+| error   | <img src="doc/screenshot/Screenshot_20251206_210136.jpg" alt="error primary light" />   | <img src="doc/screenshot/Screenshot_20251206_210257.jpg" alt="error primary" />   |
 
 ### Loading  加载中
 
-| ![](doc/screenshot/Screenshot_20251206_210139.jpg) | ![](doc/screenshot/Screenshot_20251206_210209.jpg) |
-|----------------------------------------------------|----------------------------------------------------|
+| <img src="doc/screenshot/Screenshot_20251206_210139.jpg" alt="loading light" /> | <img src="doc/screenshot/Screenshot_20251206_210209.jpg" alt="loading primary" /> |
+|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
 
 ### progress 进度条
 
-| ![](doc/screenshot/Screenshot_20251206_210226.jpg) | ![](doc/screenshot/Screenshot_20251206_213227.jpg) |
-|----------------------------------------------------|----------------------------------------------------|
+| <img src="doc/screenshot/Screenshot_20251206_210226.jpg" alt="progress light" /> | <img src="doc/screenshot/Screenshot_20251206_213227.jpg" alt="progress primary" /> |
+|----------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
 
 
 ## 📄 License 许可证
