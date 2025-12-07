@@ -1,20 +1,16 @@
 # Flutter Toast Pro
 
 > Lightweight, overlay-based toast / loading / progress utilities driven by `OverlayPortal` and a global `FlutterToastProWrapper`.
+
 > 依托 `OverlayPortal` 与全局 `FlutterToastProWrapper` 的轻量吐司、加载与进度组件。
 
-## ✨ Highlights 功能亮点
-- Stateless invocation: wrap the app with `FlutterToastProWrapper`, then call `FlutterToast` anywhere without context.
-  通过 `FlutterToastProWrapper` 注入，全局静态方法即可触发，无需上下文传递。
-- Built-in presets for info / success / warning / error plus customizable alignment, duration, and extra payload.
-  自带 info/success/warning/error 语义色彩，可自由指定对齐、时长与扩展数据。
-- Message, loading mask, and determinate progress overlays share the same event bus backed by `rxdart`.
-  消息、加载、进度共用 `rxdart` 事件总线，天然适配多页面与多 Navigator 场景。
-- Default UI ready to ship; plug in `messageBuilder`, `loadingBuilder`, `progressBuilder` for complete control.
-  内置默认样式，亦可通过各类 Builder 自定义展示形态。
+> ❗ **注意**：message,loading,progress 三类 Overlay 互斥显示，调用任意一类时会自动关闭其他两类。
+
+> ❗ **Note**: message, loading, and progress overlays are mutually exclusive; invoking one type will automatically dismiss the others.
 
 ## 📦 Installation 安装
 Add the dependency manually or run `flutter pub add`:
+
 在 `pubspec.yaml` 中添加依赖，或执行下方命令：
 
 ```yaml
@@ -23,13 +19,15 @@ dependencies:
 ```
 
 ```bash
-flutter pub add flutter_toast_pro
+  flutter pub add flutter_toast_pro
 ```
 
 ## 🚀 Quick Start 快速开始
 1. Wrap your root widget (e.g., `MaterialApp`) with `FlutterToastProWrapper`.
+
    使用 `FlutterToastProWrapper` 包裹根 Widget（如 `MaterialApp`）。
 2. Invoke static helpers such as `FlutterToast.showSuccessMessage` wherever needed.
+
    在任意位置调用 `FlutterToast` 静态方法即可。
 
 ```dart
@@ -75,6 +73,7 @@ class HomePage extends StatelessWidget {
 | `hideMessage()`                                                  | –                       | –                                                        | Manually dismiss the current toast and cancel timers. 手动关闭当前消息并终止定时器。           |
 
 > Alignment defaults to `Alignment.topCenter`; `extra` carries arbitrary payloads for custom builders.
+
 > 默认对齐为 `Alignment.topCenter`，`extra` 可传入任意扩展数据供自定义 Builder 使用。
 
 ### Auto Close 自动关闭
@@ -93,10 +92,12 @@ class HomePage extends StatelessWidget {
 | `FlutterToast.hideProgress()`                                                                                            | Dismiss the progress overlay. 关闭进度弹层。                         |
 
 Default widgets appear centered with a modal barrier; feel free to swap in custom builders just like messages.
+
 默认 UI 为屏幕中心的模态遮罩，可像消息一样完全替换为自定义组件。
 
 ## 🎨 Custom UI 自定义界面
 `FlutterToastProWrapper` exposes three builders. Supply your own widgets to align, animate, or theme the overlays.
+
 三个 Builder 可用于完全定制 UI，以下示例演示如何替换默认消息组件：
 
 ```dart
@@ -129,30 +130,34 @@ FlutterToastProWrapper(
 ```
 
 - The wrapper covers the full screen; align widgets according to the provided `alignment`.
+
   Wrapper 铺满全屏，根据传入的 `alignment` 自行定位。
-- Use `extra` to shuttle icons, callbacks, or analytics IDs to your builder.
-  `extra` 可在业务层传入图标、回调 ID 等扩展数据。
+- Use `extra` can be extended data such as custom data, IDs, etc. at the business layer.
+
+  `extra` 可在业务层传入自定义的数据、 ID 等扩展数据。
 
 ## 截图
 
 ### Message 消息
 
-| type    | EffectType.primaryLight                                                                 | EffectType.primary                                                                |
-|---------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| info    | <img src="doc/screenshot/Screenshot_20251206_210249.jpg" alt="info primary light" />    | <img src="doc/screenshot/Screenshot_20251206_210127.jpg" alt="info primary" />    |
-| success | <img src="doc/screenshot/Screenshot_20251206_210133.jpg" alt="success primary light" /> | <img src="doc/screenshot/Screenshot_20251206_210254.jpg" alt="success primary" /> |
-| waring  | <img src="doc/screenshot/Screenshot_20251206_210130.jpg" alt="warning primary light" /> | <img src="doc/screenshot/Screenshot_20251206_210252.jpg" alt="warning primary" /> |
-| error   | <img src="doc/screenshot/Screenshot_20251206_210136.jpg" alt="error primary light" />   | <img src="doc/screenshot/Screenshot_20251206_210257.jpg" alt="error primary" />   |
+- `EffectType`默认为`EffectType.primaryLight`
+
+| MessageType | EffectType.primary                                                                                              | EffectType.primaryLight                                                                                      |
+|-------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| info        | <img src="doc/screenshot/Screenshot_20251206_210127.jpg" alt="info primary" width="375" height="812"/>          | <img src="doc/screenshot/Screenshot_20251206_210249.jpg" alt="info primary light" width="375" height="812"/> |
+| success     | <img src="doc/screenshot/Screenshot_20251206_210133.jpg" alt="success primary light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210254.jpg" alt="success primary" width="375" height="812"/>    |
+| waring      | <img src="doc/screenshot/Screenshot_20251206_210130.jpg" alt="warning primary light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210252.jpg" alt="warning primary" width="375" height="812"/>    |
+| error       | <img src="doc/screenshot/Screenshot_20251206_210136.jpg" alt="error primary light" width="375" height="812"/>   | <img src="doc/screenshot/Screenshot_20251206_210257.jpg" alt="error primary" width="375" height="812"/>      |
 
 ### Loading  加载中
 
-| <img src="doc/screenshot/Screenshot_20251206_210139.jpg" alt="loading light" /> | <img src="doc/screenshot/Screenshot_20251206_210209.jpg" alt="loading primary" /> |
-|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| <img src="doc/screenshot/Screenshot_20251206_210139.jpg" alt="loading light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210209.jpg" alt="loading primary" width="375" height="812"/> |
+|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
 
 ### progress 进度条
 
-| <img src="doc/screenshot/Screenshot_20251206_210226.jpg" alt="progress light" /> | <img src="doc/screenshot/Screenshot_20251206_213227.jpg" alt="progress primary" /> |
-|----------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| <img src="doc/screenshot/Screenshot_20251206_210226.jpg" alt="progress light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_213227.jpg" alt="progress primary" width="375" height="812"/> |
+|----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 
 
 ## 📄 License 许可证

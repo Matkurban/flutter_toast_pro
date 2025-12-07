@@ -1,7 +1,7 @@
 enum EffectType {
-  ///浅色背景
+  ///浅色调颜色
   primaryLight,
 
-  ///深色背景
+  ///主色调颜色
   primary,
 }

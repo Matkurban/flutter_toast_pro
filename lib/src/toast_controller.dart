@@ -134,4 +134,40 @@ sealed class FlutterToastPro {
   static void hideLoading() {
     ToastEvent.hideMessages.add(ToastType.loading);
   }
+
+  ///默认的 message 颜色
+  static MessageStyleOptions defaultMessageStyleOptions() {
+    return MessageStyleOptions(
+      info: InfoMessageColorOption(
+        primaryLight: ColorOption(
+          backgroundColor: Colors.black.withValues(alpha: 0.3),
+          foregroundColor: Colors.white,
+        ),
+        primary: ColorOption(backgroundColor: Colors.black, foregroundColor: Colors.white),
+      ),
+      success: SuccessMessageColorOption(
+        primaryLight: ColorOption(
+          backgroundColor: Color(0xFF67c23a).withValues(alpha: 0.3),
+          foregroundColor: Color(0xFF67c23a),
+        ),
+        primary: ColorOption(backgroundColor: Color(0xFF67c23a), foregroundColor: Colors.white),
+      ),
+      warning: WarningMessageColorOption(
+        primaryLight: ColorOption(
+          backgroundColor: Color(0xFFe6a23d).withValues(alpha: 0.3),
+          foregroundColor: Color(0xFFe6a23d),
+        ),
+        primary: ColorOption(backgroundColor: Color(0xFFe6a23d), foregroundColor: Colors.white),
+      ),
+      error: ErrorMessageColorOption(
+        primaryLight: ColorOption(
+          backgroundColor: Color(0xFFEF4444).withValues(alpha: 0.3),
+          foregroundColor: Color(0xFFEF4444),
+        ),
+        primary: ColorOption(backgroundColor: Color(0xFFEF4444), foregroundColor: Colors.white),
+      ),
+      padding: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 12),
+      borderRadius: BorderRadiusGeometry.circular(10),
+    );
+  }
 }

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_toast_pro/src/model/effect_type.dart';
-
+import 'model/effect_type.dart';
+import 'model/message_style_options.dart';
 import 'model/toast_data_model.dart';
 import 'model/toast_type.dart';
 import 'statement.dart';
@@ -10,6 +10,7 @@ import 'toast_event.dart';
 import 'ui/loading_overlay_entry.dart';
 import 'ui/message_overlay_entry.dart';
 import 'ui/progress_overlay_entry.dart';
+import 'toast_controller.dart';
 
 class FlutterToastProWrapper extends StatefulWidget {
   const FlutterToastProWrapper({
@@ -31,6 +32,7 @@ class FlutterToastProWrapper extends StatefulWidget {
     this.defaultMessageAlignment = Alignment.topCenter,
     this.defaultProgressAlignment = Alignment.center,
     this.defaultLoadingAlignment = Alignment.center,
+    this.messageStyleOptions,
   });
 
   ///子组件
@@ -90,6 +92,9 @@ class FlutterToastProWrapper extends StatefulWidget {
 
   /// 加载中默认的位置
   final Alignment defaultLoadingAlignment;
+
+  ///message消息颜色自定义
+  final MessageStyleOptions? messageStyleOptions;
 
   @override
   State<FlutterToastProWrapper> createState() => _FlutterToastProWrapperState();
@@ -205,6 +210,8 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
             size: size,
             effectType: widget.effectType,
             defaultAlignment: widget.defaultMessageAlignment,
+            styleOptions:
+                widget.messageStyleOptions ?? FlutterToastPro.defaultMessageStyleOptions(),
           ),
           loadingOverlayEntry(
             controller: loadingOverlayController,

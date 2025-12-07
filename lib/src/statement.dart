@@ -7,14 +7,14 @@ import 'model/message_type.dart';
 ///[extra] 扩展数据
 ///只用于普通消息
 typedef ToastMessageBuilder =
-    Widget Function({
+    Widget Function(
       BuildContext context,
       String message,
       MessageType type,
       EffectType effectType,
       Alignment alignment,
       Map<String, dynamic> extra,
-    });
+    );
 
 ///显示进度消息的声明
 ///[message] 加载中消息的内容
@@ -22,22 +22,27 @@ typedef ToastMessageBuilder =
 ///[extra] 扩展数据
 ///只用于进度消息
 typedef ToastProgressBuilder =
-    Widget Function({
+    Widget Function(
       BuildContext context,
       double progress,
       String? message,
       Alignment alignment,
       Map<String, dynamic> extra,
-    });
+    );
 
 ///显示加载中的声明
 ///[message] 消息的内容
 ///[extra] 扩展数据
 ///只用于加载中消息
 typedef ToastLoadingBuilder =
-    Widget Function({
+    Widget Function(
       BuildContext context,
       String? message,
       Alignment alignment,
       Map<String, dynamic> extra,
-    });
+    );
+
+///消息文本样式构建器声明
+///[type] 消息类型
+///[effectType] 效果类型
+typedef MessageTextStyleBuilder = TextStyle Function(MessageType type, EffectType effectType);

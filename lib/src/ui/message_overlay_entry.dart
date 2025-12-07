@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart_flutter/rxdart_flutter.dart';
 
 import '../model/effect_type.dart';
+import '../model/message_style_options.dart';
 import '../model/toast_data_model.dart';
 import '../statement.dart';
 import '../toast_event.dart';
@@ -15,6 +16,7 @@ OverlayEntry messageOverlayEntry({
   required Size size,
   required EffectType effectType,
   required Alignment defaultAlignment,
+  required MessageStyleOptions styleOptions,
 }) {
   return OverlayEntry(
     builder: (BuildContext context) {
@@ -35,18 +37,19 @@ OverlayEntry messageOverlayEntry({
                     child: SafeArea(
                       child:
                           builder?.call(
-                            context: context,
-                            message: value.message ?? "",
-                            type: value.messageType,
-                            effectType: value.effectType ?? effectType,
-                            alignment: value.alignment ?? defaultAlignment,
-                            extra: value.extra,
+                            context,
+                            value.message ?? "",
+                            value.messageType,
+                            value.effectType ?? effectType,
+                            value.alignment ?? defaultAlignment,
+                            value.extra,
                           ) ??
                           DefaultMessageWidget(
                             message: value.message ?? "",
                             type: value.messageType,
                             effectType: value.effectType ?? effectType,
                             alignment: value.alignment ?? defaultAlignment,
+                            styleOptions: styleOptions,
                           ),
                     ),
                   ),

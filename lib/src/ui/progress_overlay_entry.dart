@@ -32,11 +32,11 @@ OverlayEntry progressOverlayEntry({
                     color: overlayColor,
                     child:
                         builder?.call(
-                          context: context,
-                          progress: value.progress ?? 0,
-                          message: value.message,
-                          alignment: value.alignment ?? defaultAlignment,
-                          extra: value.extra,
+                          context,
+                          value.progress ?? 0,
+                          value.message,
+                          value.alignment ?? defaultAlignment,
+                          value.extra,
                         ) ??
                         DefaultProgressWidget(
                           progress: value.progress,

@@ -12,16 +12,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterToastProWrapper(
-      effectType: EffectType.primaryLight,
+      effectType: EffectType.primary,
+      messageStyleOptions: FlutterToastPro.defaultMessageStyleOptions().copyWith(
+        margin: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 20),
+      ),
+      loadingIgnoring: true,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: ThemeMode.light,
         home: const MyHomePage(),
-        /* builder: (context, child) {
-          return FlutterToastProWrapper(child: child ?? SizedBox.shrink());
-        },*/
       ),
     );
   }
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showMessage("显示info消息");
+                FlutterToastPro.showMessage("显示info消息哈哈哈哈就放假放假放假记得记得就觉得觉得锦江大酒店觉得就觉得觉得");
               },
               child: Text("显示info消息"),
             ),

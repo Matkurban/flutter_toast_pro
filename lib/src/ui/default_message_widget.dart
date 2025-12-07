@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_toast_pro/src/model/effect_type.dart';
 
+import '../model/effect_type.dart';
+import '../model/message_style_options.dart';
 import '../model/message_type.dart';
 
 class DefaultMessageWidget extends StatelessWidget {
@@ -10,6 +11,7 @@ class DefaultMessageWidget extends StatelessWidget {
     required this.type,
     required this.effectType,
     required this.alignment,
+    required this.styleOptions,
   });
 
   final String message;
@@ -20,6 +22,8 @@ class DefaultMessageWidget extends StatelessWidget {
 
   final AlignmentGeometry alignment;
 
+  final MessageStyleOptions styleOptions;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -29,50 +33,59 @@ class DefaultMessageWidget extends StatelessWidget {
       case MessageType.info:
         switch (effectType) {
           case EffectType.primaryLight:
-            bgColor = Colors.black.withValues(alpha: 0.3);
+            bgColor = styleOptions.info.primaryLight.backgroundColor;
+            textColor = styleOptions.info.primaryLight.foregroundColor;
           case EffectType.primary:
-            bgColor = Colors.black;
+            bgColor = styleOptions.info.primary.backgroundColor;
+            textColor = styleOptions.info.primary.foregroundColor;
         }
-        textColor = Colors.white;
 
       case MessageType.success:
         switch (effectType) {
           case EffectType.primaryLight:
-            bgColor = Color(0xFF67c23a).withValues(alpha: 0.3);
-            textColor = Color(0xFF67c23a);
+            bgColor = styleOptions.success.primaryLight.backgroundColor;
+            textColor = styleOptions.success.primaryLight.foregroundColor;
           case EffectType.primary:
-            bgColor = Color(0xFF67c23a);
-            textColor = Colors.white;
+            bgColor = styleOptions.success.primary.backgroundColor;
+            textColor = styleOptions.success.primary.foregroundColor;
         }
 
       case MessageType.warning:
         switch (effectType) {
           case EffectType.primaryLight:
-            bgColor = Color(0xFFe6a23d).withValues(alpha: 0.3);
-            textColor = Color(0xFFe6a23d);
+            bgColor = styleOptions.warning.primaryLight.backgroundColor;
+            textColor = styleOptions.warning.primaryLight.foregroundColor;
           case EffectType.primary:
-            bgColor = Color(0xFFe6a23d);
-            textColor = Colors.white;
+            bgColor = styleOptions.warning.primary.backgroundColor;
+            textColor = styleOptions.warning.primary.foregroundColor;
         }
 
       case MessageType.error:
         switch (effectType) {
           case EffectType.primaryLight:
-            bgColor = Color(0xFFf56c6c).withValues(alpha: 0.3);
-            textColor = Color(0xFFf56c6c);
+            bgColor = styleOptions.error.primaryLight.backgroundColor;
+            textColor = styleOptions.error.primaryLight.foregroundColor;
           case EffectType.primary:
-            bgColor = Color(0xFFf56c6c);
-            textColor = Colors.white;
+            bgColor = styleOptions.error.primary.backgroundColor;
+            textColor = styleOptions.error.primary.foregroundColor;
         }
     }
     return Container(
       width: size.width,
       height: size.height,
       alignment: alignment,
+      padding: styleOptions.margin,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadiusGeometry.circular(10)),
-        child: Text(message, style: TextStyle(color: textColor)),
+        padding: styleOptions.padding,
+        decoration: BoxDecoration(color: bgColor, borderRadius: styleOptions.borderRadius),
+        child: Text(
+          message,
+          style:
+              styleOptions.textStyleBuilder
+                  ?.call(type, effectType)
+                  .merge(TextStyle(color: textColor)) ??
+              TextStyle(color: textColor),
+        ),
       ),
     );
   }

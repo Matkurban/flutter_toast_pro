@@ -33,10 +33,10 @@ OverlayEntry loadingOverlayEntry({
                     height: size.height,
                     child:
                         builder?.call(
-                          context: context,
-                          message: value.message,
-                          alignment: value.alignment ?? defaultAlignment,
-                          extra: value.extra,
+                          context,
+                          value.message,
+                          value.alignment ?? defaultAlignment,
+                          value.extra,
                         ) ??
                         DefaultLoadingWidget(
                           message: value.message,
