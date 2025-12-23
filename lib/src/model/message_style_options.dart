@@ -2,52 +2,142 @@ import 'package:flutter/material.dart';
 
 import '../statement.dart';
 
-///message消息的颜色自定义
+/// Message style options.
+///
+/// message 类型 toast 的样式配置。
+@immutable
 class MessageStyleOptions {
-  ///Info消息颜色自定义
+  /// Info tone option.
+  ///
+  /// Info 消息配色。
   final InfoMessageColorOption info;
 
-  ///Success消息颜色自定义
+  /// Success tone option.
+  ///
+  /// Success 消息配色。
   final SuccessMessageColorOption success;
 
-  ///Warning消息颜色自定义
+  /// Warning tone option.
+  ///
+  /// Warning 消息配色。
   final WarningMessageColorOption warning;
 
-  ///Error消息颜色自定义
+  /// Error tone option.
+  ///
+  /// Error 消息配色。
   final ErrorMessageColorOption error;
 
-  ///消息内边距
+  /// Message inner padding.
+  ///
+  /// 消息内容内边距。
   final EdgeInsetsGeometry padding;
 
-  ///消息外边距
+  /// Message outer margin.
+  ///
+  /// 消息内容外边距。
   final EdgeInsetsGeometry? margin;
 
-  ///消息边框圆角
+  /// Message border radius.
+  ///
+  /// 消息圆角。
   final BorderRadiusGeometry borderRadius;
 
-  ///消息文本样式构建器
-  ///可以不传颜色，内部会 merge 设置颜色
+  /// Message text style builder.
+  ///
+  /// 消息文本样式构建器。
+  ///
+  /// Tip: You can omit color here; internal code will merge the foreground color.
+  ///
+  /// 提示：这里可以不设置颜色，内部会 merge 前景色。
   final MessageTextStyleBuilder? textStyleBuilder;
 
-  MessageStyleOptions({
+  /// Create message style options.
+  ///
+  /// 创建 message 样式配置。
+  const MessageStyleOptions({
+    /// Info tone option.
+    ///
+    /// Info 消息配色。
     required this.info,
+
+    /// Success tone option.
+    ///
+    /// Success 消息配色。
     required this.success,
+
+    /// Warning tone option.
+    ///
+    /// Warning 消息配色。
     required this.warning,
+
+    /// Error tone option.
+    ///
+    /// Error 消息配色。
     required this.error,
+
+    /// Message inner padding.
+    ///
+    /// 消息内容内边距。
     required this.padding,
+
+    /// Message outer margin.
+    ///
+    /// 消息内容外边距。
     this.margin,
+
+    /// Message border radius.
+    ///
+    /// 消息圆角。
     required this.borderRadius,
+
+    /// Message text style builder.
+    ///
+    /// 消息文本样式构建器。
     this.textStyleBuilder,
   });
 
+  /// Returns a copy with the given fields replaced.
+  ///
+  /// 基于当前对象创建副本，并替换指定字段。
   MessageStyleOptions copyWith({
+    /// Info tone option.
+    ///
+    /// Info 消息配色。
     InfoMessageColorOption? info,
+
+    /// Success tone option.
+    ///
+    /// Success 消息配色。
     SuccessMessageColorOption? success,
+
+    /// Warning tone option.
+    ///
+    /// Warning 消息配色。
     WarningMessageColorOption? warning,
+
+    /// Error tone option.
+    ///
+    /// Error 消息配色。
     ErrorMessageColorOption? error,
+
+    /// Message inner padding.
+    ///
+    /// 消息内容内边距。
     EdgeInsetsGeometry? padding,
+
+    /// Message outer margin.
+    ///
+    /// 消息内容外边距。
     EdgeInsetsGeometry? margin,
+
+    /// Message border radius.
+    ///
+    /// 消息圆角。
     BorderRadiusGeometry? borderRadius,
+
+    /// Message text style builder.
+    ///
+    /// 消息文本样式构建器。
     MessageTextStyleBuilder? textStyleBuilder,
   }) {
     return MessageStyleOptions(
@@ -63,16 +153,50 @@ class MessageStyleOptions {
   }
 }
 
+/// A pair of background + foreground colors.
+///
+/// 背景色 + 前景色 的组合。
+@immutable
 class ColorOption {
-  ///背景颜色
+  /// Background color.
+  ///
+  /// 背景颜色。
   final Color backgroundColor;
 
-  ///前景颜色
+  /// Foreground color.
+  ///
+  /// 前景颜色（通常用于文字/图标）。
   final Color foregroundColor;
 
-  ColorOption({required this.backgroundColor, required this.foregroundColor});
+  /// Create a color option.
+  ///
+  /// 创建颜色配置。
+  const ColorOption({
+    /// Background color.
+    ///
+    /// 背景颜色。
+    required this.backgroundColor,
 
-  ColorOption copyWith({Color? backgroundColor, Color? foregroundColor}) {
+    /// Foreground color.
+    ///
+    /// 前景颜色。
+    required this.foregroundColor,
+  });
+
+  /// Returns a copy with the given fields replaced.
+  ///
+  /// 基于当前对象创建副本，并替换指定字段。
+  ColorOption copyWith({
+    /// Background color.
+    ///
+    /// 背景颜色。
+    Color? backgroundColor,
+
+    /// Foreground color.
+    ///
+    /// 前景颜色。
+    Color? foregroundColor,
+  }) {
     return ColorOption(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       foregroundColor: foregroundColor ?? this.foregroundColor,
@@ -80,16 +204,50 @@ class ColorOption {
   }
 }
 
+/// A tone set for message colors.
+///
+/// 消息颜色的色调集合（浅色调/主色调）。
+@immutable
 class MessageColorTone {
-  ///浅色调颜色
+  /// Light tone.
+  ///
+  /// 浅色调。
   final ColorOption primaryLight;
 
-  ///主色调颜色
+  /// Primary tone.
+  ///
+  /// 主色调。
   final ColorOption primary;
 
-  MessageColorTone({required this.primaryLight, required this.primary});
+  /// Create a tone set.
+  ///
+  /// 创建色调集合。
+  const MessageColorTone({
+    /// Light tone.
+    ///
+    /// 浅色调。
+    required this.primaryLight,
 
-  MessageColorTone copyWith({ColorOption? primaryLight, ColorOption? primary}) {
+    /// Primary tone.
+    ///
+    /// 主色调。
+    required this.primary,
+  });
+
+  /// Returns a copy with the given fields replaced.
+  ///
+  /// 基于当前对象创建副本，并替换指定字段。
+  MessageColorTone copyWith({
+    /// Light tone.
+    ///
+    /// 浅色调。
+    ColorOption? primaryLight,
+
+    /// Primary tone.
+    ///
+    /// 主色调。
+    ColorOption? primary,
+  }) {
     return MessageColorTone(
       primaryLight: primaryLight ?? this.primaryLight,
       primary: primary ?? this.primary,
@@ -97,22 +255,54 @@ class MessageColorTone {
   }
 }
 
-///Info消息颜色自定义
+/// Info message color tone.
+///
+/// Info 消息颜色色调。
 class InfoMessageColorOption extends MessageColorTone {
-  InfoMessageColorOption({required super.primaryLight, required super.primary});
+  /// Create info tone.
+  ///
+  /// 创建 info 色调。
+  const InfoMessageColorOption({
+    required super.primaryLight,
+    required super.primary,
+  });
 }
 
-///Success消息颜色自定义
+/// Success message color tone.
+///
+/// Success 消息颜色色调。
 class SuccessMessageColorOption extends MessageColorTone {
-  SuccessMessageColorOption({required super.primaryLight, required super.primary});
+  /// Create success tone.
+  ///
+  /// 创建 success 色调。
+  const SuccessMessageColorOption({
+    required super.primaryLight,
+    required super.primary,
+  });
 }
 
-///Warning消息颜色自定义
+/// Warning message color tone.
+///
+/// Warning 消息颜色色调。
 class WarningMessageColorOption extends MessageColorTone {
-  WarningMessageColorOption({required super.primaryLight, required super.primary});
+  /// Create warning tone.
+  ///
+  /// 创建 warning 色调。
+  const WarningMessageColorOption({
+    required super.primaryLight,
+    required super.primary,
+  });
 }
 
-///Error消息颜色自定义
+/// Error message color tone.
+///
+/// Error 消息颜色色调。
 class ErrorMessageColorOption extends MessageColorTone {
-  ErrorMessageColorOption({required super.primaryLight, required super.primary});
+  /// Create error tone.
+  ///
+  /// 创建 error 色调。
+  const ErrorMessageColorOption({
+    required super.primaryLight,
+    required super.primary,
+  });
 }

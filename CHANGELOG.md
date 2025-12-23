@@ -1,3 +1,7 @@
+## 2.0.0
+
+* Enhance toast system with new loading and progress options, and improve message type definitions
+
 ## 1.2.0
 
 - 添加更多默认样式的自定义选项

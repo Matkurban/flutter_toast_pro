@@ -1,13 +1,32 @@
 name: flutter_toast_pro
 description: "Overlay-based toast/loading/progress helper for Flutter apps."
-version: 1.2.0
+version: 2.0.0
 homepage: https://github.com/Matkurban/flutter_toast_pro
 repository: https://github.com/Matkurban/flutter_toast_pro
-topics: [toast,message,loading,progress]
+topics: [ toast,message,loading,progress ]
+screenshots:
+  - path: doc/screenshot/Screenshot_20251206_210127.jpg
+    description: 'Message (info) toast / 消息（info）'
+  - path: doc/screenshot/Screenshot_20251206_210130.jpg
+    description: 'Message (success) toast / 消息（success）'
+  - path: doc/screenshot/Screenshot_20251206_210133.jpg
+    description: 'Message (warning) toast / 消息（warning）'
+  - path: doc/screenshot/Screenshot_20251206_210136.jpg
+    description: 'Message (error) toast / 消息（error）'
+  - path: doc/screenshot/Screenshot_20251206_210139.jpg
+    description: 'Message layout demo / 消息布局示例'
+  - path: doc/screenshot/Screenshot_20251206_210209.jpg
+    description: 'Loading toast / 加载中'
+  - path: doc/screenshot/Screenshot_20251206_210226.jpg
+    description: 'Loading (with message) / 加载中（带文案）'
+  - path: doc/screenshot/Screenshot_20251206_210249.jpg
+    description: 'Progress toast / 进度'
+  - path: doc/screenshot/Screenshot_20251206_210252.jpg
+    description: 'Progress (with message) / 进度（带文案）'
 
 environment:
   sdk: ^3.10.0
-  flutter: ">=1.17.0"
+  flutter: ">=3.38.1"
 
 dependencies:
   flutter:

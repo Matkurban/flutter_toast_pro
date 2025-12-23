@@ -12,11 +12,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterToastProWrapper(
-      effectType: EffectType.primary,
-      messageStyleOptions: FlutterToastPro.defaultMessageStyleOptions().copyWith(
-        margin: EdgeInsetsGeometry.symmetric(horizontal: 16, vertical: 20),
+      uiOptions: ToastUiOptions(
+        message: ToastMessageOptions(
+          effectType: EffectType.primary,
+          style: FlutterToastProDefaults.messageStyle().copyWith(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          ),
+        ),
+        loading: const ToastLoadingOptions(
+          overlay: OverlayOptions(overlayColor: Colors.transparent, ignoring: true),
+          style: LoadingStyleOptions(constraints: BoxConstraints(minWidth: 100, minHeight: 100)),
+        ),
       ),
-      loadingIgnoring: true,
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: AppTheme.light,

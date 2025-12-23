@@ -1,12 +1,24 @@
+/// Toast type (message/loading/progress/none).
+///
+/// toast 类型（message/loading/progress/none）。
 enum ToastType {
+  /// No toast.
+  ///
+  /// 无 toast。
   none,
 
-  ///消息
+  /// Message toast.
+  ///
+  /// message toast。
   message,
 
-  ///加载中
+  /// Loading toast.
+  ///
+  /// loading toast。
   loading,
 
-  ///进度
+  /// Progress toast.
+  ///
+  /// progress toast。
   progress,
 }

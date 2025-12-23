@@ -1,7 +1,14 @@
+/// Effect type for message colors.
+///
+/// message 颜色效果类型。
 enum EffectType {
-  ///浅色调颜色
+  /// Primary light tone.
+  ///
+  /// 浅色调（primary light）。
   primaryLight,
 
-  ///主色调颜色
+  /// Primary tone.
+  ///
+  /// 主色调（primary）。
   primary,
 }

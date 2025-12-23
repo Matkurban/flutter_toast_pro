@@ -1,14 +1,24 @@
-///消息的类型枚举
+/// Message type for message toasts.
+///
+/// message toast 的消息类型。
 enum MessageType {
-  ///默认
+  /// Info.
+  ///
+  /// 信息（默认）。
   info,
 
-  ///成功
+  /// Success.
+  ///
+  /// 成功。
   success,
 
-  ///警告
+  /// Warning.
+  ///
+  /// 警告。
   warning,
 
-  ///错误
+  /// Error.
+  ///
+  /// 错误。
   error,
 }
