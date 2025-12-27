@@ -82,7 +82,7 @@ OverlayEntry progressOverlayEntry({
                     DefaultProgressWidget(
                       progress: value.progress,
                       message: value.message,
-                      alignment: alignment,
+                      position: alignment,
                       styleOptions: styleOptions,
                     ),
               );

@@ -13,7 +13,7 @@ class DefaultProgressWidget extends StatelessWidget {
     super.key,
     required this.progress,
     this.message,
-    this.alignment,
+    this.position,
     this.styleOptions = const ProgressStyleOptions(),
   });
 
@@ -36,7 +36,7 @@ class DefaultProgressWidget extends StatelessWidget {
   /// Alignment of the progress widget within the overlay.
   ///
   /// progress 组件在覆盖层中的对齐位置。
-  final AlignmentGeometry? alignment;
+  final AlignmentGeometry? position;
 
   /// Style options for the built-in progress UI.
   ///
@@ -79,41 +79,33 @@ class DefaultProgressWidget extends StatelessWidget {
           maxWidth: styleOptions.indicatorSize,
         );
 
-    // Constrain the content card (avoid being too wide on large screens).
-    //
-    // 约束内容卡片尺寸（避免大屏太宽）。
-    final BoxConstraints constraints =
-        styleOptions.constraints ??
-        BoxConstraints(maxWidth: styleOptions.maxWidth);
-
     // Main content card.
     //
     // 内容卡片主体。
-    Widget content = ConstrainedBox(
-      constraints: constraints,
-      child: Container(
-        margin: styleOptions.margin,
-        padding: styleOptions.padding,
-        decoration: decoration,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: styleOptions.indicatorSize,
-              height: styleOptions.indicatorSize,
-              child: CircularProgressIndicator(
-                value: progress,
-                color: styleOptions.indicatorColor,
-                backgroundColor: indicatorBg,
-                constraints: indicatorConstraints,
-              ),
+    Widget content = Container(
+      margin: styleOptions.margin,
+      padding: styleOptions.padding,
+      decoration: decoration,
+      alignment: styleOptions.alignment,
+      constraints: styleOptions.constraints,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: styleOptions.indicatorSize,
+            height: styleOptions.indicatorSize,
+            child: CircularProgressIndicator(
+              value: progress,
+              color: styleOptions.indicatorColor,
+              backgroundColor: indicatorBg,
+              constraints: indicatorConstraints,
             ),
-            if (message != null) ...[
-              SizedBox(height: styleOptions.messageSpacing),
-              Text(message!, style: styleOptions.messageTextStyle),
-            ],
+          ),
+          if (message != null) ...[
+            SizedBox(height: styleOptions.messageSpacing),
+            Text(message!, style: styleOptions.messageTextStyle),
           ],
-        ),
+        ],
       ),
     );
 
@@ -130,7 +122,7 @@ class DefaultProgressWidget extends StatelessWidget {
     Widget body = Container(
       width: size.width,
       height: size.height,
-      alignment: alignment,
+      alignment: position,
       child: content,
     );
 

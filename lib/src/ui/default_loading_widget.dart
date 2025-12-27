@@ -13,7 +13,7 @@ class DefaultLoadingWidget extends StatelessWidget {
   const DefaultLoadingWidget({
     super.key,
     this.message,
-    this.alignment,
+    this.position,
     this.styleOptions = const LoadingStyleOptions(),
   });
 
@@ -25,7 +25,7 @@ class DefaultLoadingWidget extends StatelessWidget {
   /// Alignment of the loading widget within the overlay.
   ///
   /// loading 组件在覆盖层中的对齐位置。
-  final Alignment? alignment;
+  final Alignment? position;
 
   /// Style options for the built-in loading UI.
   ///
@@ -64,48 +64,32 @@ class DefaultLoadingWidget extends StatelessWidget {
           Colors.green,
         ];
 
-    // Resolve indicator type.
-    // When not specified, use a reasonable default.
-    //
-    // 解析指示器类型。
-    // 未指定时使用默认类型。
-    final Indicator indicatorType = (styleOptions.indicatorType is Indicator)
-        ? styleOptions.indicatorType as Indicator
-        : Indicator.ballSpinFadeLoader;
-
-    // Constrain the content card (avoid being too wide on large screens).
-    //
-    // 约束内容卡片尺寸（避免大屏太宽）。
-    final BoxConstraints constraints =
-        styleOptions.constraints ??
-        BoxConstraints(maxWidth: styleOptions.maxWidth);
-
     // Main content card.
     //
     // 内容卡片主体。
-    Widget content = ConstrainedBox(
-      constraints: constraints,
-      child: Container(
-        margin: styleOptions.margin,
-        padding: styleOptions.padding,
-        decoration: decoration,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: styleOptions.indicatorSize,
-              height: styleOptions.indicatorSize,
-              child: LoadingIndicator(
-                indicatorType: indicatorType,
-                colors: colors,
-              ),
+    Widget content = Container(
+      margin: styleOptions.margin,
+      padding: styleOptions.padding,
+      decoration: decoration,
+      alignment: styleOptions.alignment,
+      constraints: styleOptions.constraints,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: styleOptions.indicatorSize,
+            height: styleOptions.indicatorSize,
+            child: LoadingIndicator(
+              indicatorType:
+                  styleOptions.indicatorType ?? Indicator.ballSpinFadeLoader,
+              colors: colors,
             ),
-            if (message != null) ...[
-              SizedBox(height: styleOptions.messageSpacing),
-              Text(message!, style: styleOptions.messageTextStyle),
-            ],
+          ),
+          if (message != null) ...[
+            SizedBox(height: styleOptions.messageSpacing),
+            Text(message!, style: styleOptions.messageTextStyle),
           ],
-        ),
+        ],
       ),
     );
 
@@ -122,7 +106,7 @@ class DefaultLoadingWidget extends StatelessWidget {
     Widget body = Container(
       width: size.width,
       height: size.height,
-      alignment: alignment,
+      alignment: position,
       child: content,
     );
 

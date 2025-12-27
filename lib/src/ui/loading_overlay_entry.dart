@@ -79,7 +79,7 @@ OverlayEntry loadingOverlayEntry({
                     ) ??
                     DefaultLoadingWidget(
                       message: value.message,
-                      alignment: alignment,
+                      position: alignment,
                       styleOptions: styleOptions,
                     ),
               );

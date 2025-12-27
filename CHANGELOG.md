@@ -1,20 +1,23 @@
+## 2.1.0
+
+* Add support for more properties
+
 ## 2.0.0
 
 * Enhance toast system with new loading and progress options, and improve message type definitions
 
 ## 1.2.0
 
-- 添加更多默认样式的自定义选项
+* Add more customization options for default styles
 
 ## 1.0.2
 
-- 可自定义覆盖颜色和事件处理，增强Toast
+* Customizable overlay colors and event handling to enhance Toast
 
 ## 1.0.1
 
-- 修复未导出MessageType的错误
+* Fix the error that MessageType is not exported
 
 ## 1.0.0
 
-- 首次发布，提供消息、加载、进度三类 Overlay Toast 组件
-- 支持自定义 builder、自动关闭时长与对齐方式
+* release 1.0.0 version

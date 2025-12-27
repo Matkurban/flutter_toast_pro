@@ -11,31 +11,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterToastProWrapper(
-      uiOptions: ToastUiOptions(
-        message: ToastMessageOptions(
-          effectType: EffectType.primary,
-          style: FlutterToastProDefaults.messageStyle().copyWith(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.light,
+      home: const MyHomePage(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context),
+          child: Material(
+            child: FlutterToastProWrapper(
+              uiOptions: ToastUiOptions(
+                message: ToastMessageOptions(
+                  effectType: EffectType.primary,
+                  style: FlutterToastProDefaults.messageStyle().copyWith(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 20,
+                    ),
+                  ),
+                ),
+                loading: const ToastLoadingOptions(
+                  overlay: OverlayOptions(
+                    overlayColor: Colors.transparent,
+                    ignoring: true,
+                  ),
+                  style: LoadingStyleOptions(
+                    constraints: BoxConstraints(minWidth: 100, minHeight: 100),
+                  ),
+                ),
+              ),
+              child: child ?? SizedBox.shrink(),
+            ),
           ),
-        ),
-        loading: const ToastLoadingOptions(
-          overlay: OverlayOptions(
-            overlayColor: Colors.transparent,
-            ignoring: true,
-          ),
-          style: LoadingStyleOptions(
-            constraints: BoxConstraints(minWidth: 100, minHeight: 100),
-          ),
-        ),
-      ),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.light,
-        home: const MyHomePage(),
-      ),
+        );
+      },
     );
   }
 }
