@@ -26,19 +26,19 @@ class MyApp extends StatelessWidget {
                 message: ToastMessageOptions(
                   effectType: EffectType.primary,
                   style: FlutterToastProDefaults.messageStyle().copyWith(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 20,
-                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                   ),
                 ),
                 loading: const ToastLoadingOptions(
-                  overlay: OverlayOptions(
-                    overlayColor: Colors.transparent,
-                    ignoring: true,
-                  ),
+                  overlay: OverlayOptions(overlayColor: Colors.transparent, ignoring: true),
                   style: LoadingStyleOptions(
+                    backgroundColor: Colors.transparent,
                     constraints: BoxConstraints(minWidth: 100, minHeight: 100),
+                  ),
+                ),
+                progress: ToastProgressOptions(
+                  style: ProgressStyleOptions(
+                    constraints: BoxConstraints(maxWidth: 100, maxHeight: 100),
                   ),
                 ),
               ),
@@ -73,9 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FilledButton(
               onPressed: () {
-                FlutterToastPro.showMessage(
-                  "显示info消息哈哈哈哈就放假放假放假记得记得就觉得觉得锦江大酒店觉得就觉得觉得",
-                );
+                FlutterToastPro.showMessage("显示info消息哈哈哈哈就放假放假放假记得记得就觉得觉得锦江大酒店觉得就觉得觉得");
               },
               child: Text("显示info消息"),
             ),
