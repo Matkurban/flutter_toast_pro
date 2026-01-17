@@ -95,9 +95,15 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
     // Init overlay controllers.
     //
     // 初始化 overlay 控制器。
-    messageOverlayController = OverlayPortalController(debugLabel: "flutter_toast_message");
-    progressOverlayController = OverlayPortalController(debugLabel: "flutter_toast_progress");
-    loadingOverlayController = OverlayPortalController(debugLabel: "flutter_toast_loading");
+    messageOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_message",
+    );
+    progressOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_progress",
+    );
+    loadingOverlayController = OverlayPortalController(
+      debugLabel: "flutter_toast_loading",
+    );
 
     // Listen to events.
     //
@@ -132,7 +138,9 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
         if (data.message != null) {
           messageOverlayController.show();
           if (_ui.message.autoClose) {
-            _scheduleMessageClose(data.closeDuration ?? _ui.message.closeDuration);
+            _scheduleMessageClose(
+              data.closeDuration ?? _ui.message.closeDuration,
+            );
           }
         }
         break;
@@ -191,7 +199,8 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
     // Resolve default message style.
     //
     // 解析 message 默认样式。
-    final messageStyle = ui.message.style ?? FlutterToastProDefaults.messageStyle();
+    final messageStyle =
+        ui.message.style ?? FlutterToastProDefaults.messageStyle();
 
     return Directionality(
       textDirection: ui.textDirection,
