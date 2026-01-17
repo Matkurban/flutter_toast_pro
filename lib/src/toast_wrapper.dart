@@ -12,6 +12,8 @@ import 'ui/loading_overlay_entry.dart';
 import 'ui/message_overlay_entry.dart';
 import 'ui/progress_overlay_entry.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 /// Root wrapper that installs toast overlays above your app.
 ///
 /// 用于在应用最上层安装 toast 覆盖层的根组件。
@@ -95,15 +97,9 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
     // Init overlay controllers.
     //
     // 初始化 overlay 控制器。
-    messageOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_message",
-    );
-    progressOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_progress",
-    );
-    loadingOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_loading",
-    );
+    messageOverlayController = OverlayPortalController(debugLabel: "flutter_toast_message");
+    progressOverlayController = OverlayPortalController(debugLabel: "flutter_toast_progress");
+    loadingOverlayController = OverlayPortalController(debugLabel: "flutter_toast_loading");
 
     // Listen to events.
     //
@@ -138,9 +134,7 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
         if (data.message != null) {
           messageOverlayController.show();
           if (_ui.message.autoClose) {
-            _scheduleMessageClose(
-              data.closeDuration ?? _ui.message.closeDuration,
-            );
+            _scheduleMessageClose(data.closeDuration ?? _ui.message.closeDuration);
           }
         }
         break;
@@ -199,32 +193,35 @@ class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
     // Resolve default message style.
     //
     // 解析 message 默认样式。
-    final messageStyle =
-        ui.message.style ?? FlutterToastProDefaults.messageStyle();
+    final messageStyle = ui.message.style ?? FlutterToastProDefaults.messageStyle();
 
     return Directionality(
       textDirection: ui.textDirection,
-      child: Overlay(
-        initialEntries: [
-          OverlayEntry(builder: (BuildContext context) => widget.child),
-          messageOverlayEntry(
-            controller: messageOverlayController,
-            builder: widget.messageBuilder,
-            overlay: ui.message.overlay,
-            effectType: ui.message.effectType,
-            styleOptions: messageStyle,
-          ),
-          loadingOverlayEntry(
-            controller: loadingOverlayController,
-            builder: widget.loadingBuilder,
-            overlay: ui.loading.overlay,
-            styleOptions: ui.loading.style,
-          ),
-          progressOverlayEntry(
-            controller: progressOverlayController,
-            builder: widget.progressBuilder,
-            overlay: ui.progress.overlay,
-            styleOptions: ui.progress.style,
+      child: Stack(
+        children: [
+          widget.child,
+          Overlay(
+            initialEntries: [
+              messageOverlayEntry(
+                controller: messageOverlayController,
+                builder: widget.messageBuilder,
+                overlay: ui.message.overlay,
+                effectType: ui.message.effectType,
+                styleOptions: messageStyle,
+              ),
+              loadingOverlayEntry(
+                controller: loadingOverlayController,
+                builder: widget.loadingBuilder,
+                overlay: ui.loading.overlay,
+                styleOptions: ui.loading.style,
+              ),
+              progressOverlayEntry(
+                controller: progressOverlayController,
+                builder: widget.progressBuilder,
+                overlay: ui.progress.overlay,
+                styleOptions: ui.progress.style,
+              ),
+            ],
           ),
         ],
       ),
