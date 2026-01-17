@@ -12,8 +12,6 @@ import 'ui/loading_overlay_entry.dart';
 import 'ui/message_overlay_entry.dart';
 import 'ui/progress_overlay_entry.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 /// Root wrapper that installs toast overlays above your app.
 ///
 /// 用于在应用最上层安装 toast 覆盖层的根组件。
