@@ -13,7 +13,7 @@ class DefaultProgressWidget extends StatelessWidget {
     super.key,
     required this.progress,
     this.message,
-    this.position,
+    this.alignment,
     this.styleOptions = const ProgressStyleOptions(),
   });
 
@@ -36,7 +36,7 @@ class DefaultProgressWidget extends StatelessWidget {
   /// Alignment of the progress widget within the overlay.
   ///
   /// progress 组件在覆盖层中的对齐位置。
-  final AlignmentGeometry? position;
+  final AlignmentGeometry? alignment;
 
   /// Style options for the built-in progress UI.
   ///
@@ -86,10 +86,9 @@ class DefaultProgressWidget extends StatelessWidget {
       margin: styleOptions.margin,
       padding: styleOptions.padding,
       decoration: decoration,
-      alignment: styleOptions.alignment,
       constraints: styleOptions.constraints,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
+        alignment: .center,
         children: [
           SizedBox(
             width: styleOptions.indicatorSize,
@@ -98,23 +97,23 @@ class DefaultProgressWidget extends StatelessWidget {
               value: progress,
               color: styleOptions.indicatorColor,
               backgroundColor: indicatorBg,
+              strokeWidth: styleOptions.strokeWidth,
               constraints: indicatorConstraints,
             ),
           ),
           if (message != null) ...[
-            SizedBox(height: styleOptions.messageSpacing),
-            Text(message!, style: styleOptions.messageTextStyle),
+            Positioned(
+              child: Text(
+                message!,
+                style:
+                    styleOptions.messageTextStyle ??
+                    TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
           ],
         ],
       ),
     );
-
-    // Accessibility semantics.
-    //
-    // 无障碍语义。
-    if (styleOptions.semanticsLabel != null) {
-      content = Semantics(label: styleOptions.semanticsLabel, child: content);
-    }
 
     // Full-screen container to place the content.
     //
@@ -122,7 +121,7 @@ class DefaultProgressWidget extends StatelessWidget {
     Widget body = Container(
       width: size.width,
       height: size.height,
-      alignment: position,
+      alignment: alignment,
       child: content,
     );
 

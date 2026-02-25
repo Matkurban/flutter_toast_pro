@@ -19,19 +19,26 @@ class MyApp extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           ),
         ),
-        loading: const ToastLoadingOptions(
-          overlay: OverlayOptions(
+        loading: ToastLoadingOptions(
+          overlay: const OverlayOptions(
             overlayColor: Colors.transparent,
             ignoring: true,
           ),
           style: LoadingStyleOptions(
-            backgroundColor: Colors.transparent,
-            constraints: BoxConstraints(minWidth: 100, minHeight: 100),
+            backgroundColor: Colors.black.withValues(alpha: 0.75),
+            indicatorColor: Colors.white,
+            messageTextStyle: const TextStyle(color: Colors.white),
+            /*  constraints: const BoxConstraints(
+              minWidth: 100,
+              minHeight: 100,
+              maxHeight: 120,
+              maxWidth: 120,
+            ),*/
           ),
         ),
         progress: ToastProgressOptions(
           style: ProgressStyleOptions(
-            constraints: BoxConstraints(maxWidth: 100, maxHeight: 100),
+            // constraints: BoxConstraints(maxWidth: 100, maxHeight: 100),
           ),
         ),
       ),

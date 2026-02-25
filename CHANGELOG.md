@@ -1,3 +1,7 @@
+## 2.2.0
+
+* Add new features and improvements to the toast system, including enhanced customization options and improved performance
+
 ## 2.1.1
 
 * fix bug

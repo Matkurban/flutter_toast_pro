@@ -1,6 +1,6 @@
 name: flutter_toast_pro
 description: "Overlay-based toast/loading/progress helper for Flutter apps."
-version: 2.1.1
+version: 2.2.0
 homepage: https://github.com/Matkurban/flutter_toast_pro
 repository: https://github.com/Matkurban/flutter_toast_pro
 topics: [ toast,message,loading,progress ]
@@ -33,7 +33,6 @@ dependencies:
     sdk: flutter
   rxdart: ^0.28.0
   rxdart_flutter: ^0.0.2
-  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:

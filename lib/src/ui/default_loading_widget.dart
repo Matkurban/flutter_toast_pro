@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 import '../model/loading_style_options.dart';
 
@@ -13,7 +13,7 @@ class DefaultLoadingWidget extends StatelessWidget {
   const DefaultLoadingWidget({
     super.key,
     this.message,
-    this.position,
+    this.alignment,
     this.styleOptions = const LoadingStyleOptions(),
   });
 
@@ -25,7 +25,7 @@ class DefaultLoadingWidget extends StatelessWidget {
   /// Alignment of the loading widget within the overlay.
   ///
   /// loading 组件在覆盖层中的对齐位置。
-  final Alignment? position;
+  final Alignment? alignment;
 
   /// Style options for the built-in loading UI.
   ///
@@ -51,19 +51,6 @@ class DefaultLoadingWidget extends StatelessWidget {
           borderRadius: styleOptions.borderRadius,
         );
 
-    // Resolve indicator colors.
-    //
-    // 解析指示器颜色列表。
-    final List<Color> colors =
-        styleOptions.indicatorColors ??
-        const [
-          Colors.blue,
-          Colors.purple,
-          Colors.red,
-          Colors.orange,
-          Colors.green,
-        ];
-
     // Main content card.
     //
     // 内容卡片主体。
@@ -71,34 +58,26 @@ class DefaultLoadingWidget extends StatelessWidget {
       margin: styleOptions.margin,
       padding: styleOptions.padding,
       decoration: decoration,
-      alignment: styleOptions.alignment,
       constraints: styleOptions.constraints,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: styleOptions.indicatorSize,
-            height: styleOptions.indicatorSize,
-            child: LoadingIndicator(
-              indicatorType:
-                  styleOptions.indicatorType ?? Indicator.ballSpinFadeLoader,
-              colors: colors,
-            ),
+          CupertinoActivityIndicator(
+            radius: styleOptions.indicatorSize,
+            color: styleOptions.indicatorColor,
           ),
           if (message != null) ...[
             SizedBox(height: styleOptions.messageSpacing),
-            Text(message!, style: styleOptions.messageTextStyle),
+            Text(
+              message!,
+              style:
+                  styleOptions.messageTextStyle ??
+                  TextStyle(color: Colors.white, fontSize: 12),
+            ),
           ],
         ],
       ),
     );
-
-    // Accessibility semantics.
-    //
-    // 无障碍语义。
-    if (styleOptions.semanticsLabel != null) {
-      content = Semantics(label: styleOptions.semanticsLabel, child: content);
-    }
 
     // Full-screen container to place the content.
     //
@@ -106,7 +85,7 @@ class DefaultLoadingWidget extends StatelessWidget {
     Widget body = Container(
       width: size.width,
       height: size.height,
-      alignment: position,
+      alignment: alignment,
       child: content,
     );
 

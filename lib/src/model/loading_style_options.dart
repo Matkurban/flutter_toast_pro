@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 /// UI style options for the default loading widget.
 ///
@@ -14,10 +13,8 @@ class LoadingStyleOptions {
     this.borderRadius = const BorderRadius.all(Radius.circular(10)),
     this.constraints,
     this.safeArea = true,
-    this.semanticsLabel,
-    this.indicatorSize = 48,
-    this.indicatorType,
-    this.indicatorColors,
+    this.indicatorSize = 16,
+    this.indicatorColor,
     this.messageTextStyle,
     this.messageSpacing = 4,
     this.alignment = Alignment.center,
@@ -58,25 +55,12 @@ class LoadingStyleOptions {
   /// 是否使用 SafeArea 包裹。
   final bool safeArea;
 
-  /// Optional semantics label for accessibility.
-  ///
-  /// 无障碍语义标签（Accessibility）。
-  final String? semanticsLabel;
-
   /// Loading indicator size.
   ///
   /// 加载指示器尺寸。
   final double indicatorSize;
 
-  /// Loading indicator type.
-  ///
-  /// 加载指示器类型。
-  final Indicator? indicatorType;
-
-  /// Loading indicator colors.
-  ///
-  /// 加载指示器颜色列表。
-  final List<Color>? indicatorColors;
+  final Color? indicatorColor;
 
   /// Text style for message.
   ///
@@ -102,10 +86,8 @@ class LoadingStyleOptions {
     BoxConstraints? constraints,
     double? maxWidth,
     bool? safeArea,
-    String? semanticsLabel,
     double? indicatorSize,
-    Indicator? indicatorType,
-    List<Color>? indicatorColors,
+    Color? indicatorColor,
     TextStyle? messageTextStyle,
     double? messageSpacing,
     Alignment? alignment,
@@ -118,10 +100,8 @@ class LoadingStyleOptions {
       borderRadius: borderRadius ?? this.borderRadius,
       constraints: constraints ?? this.constraints,
       safeArea: safeArea ?? this.safeArea,
-      semanticsLabel: semanticsLabel ?? this.semanticsLabel,
       indicatorSize: indicatorSize ?? this.indicatorSize,
-      indicatorType: indicatorType ?? this.indicatorType,
-      indicatorColors: indicatorColors ?? this.indicatorColors,
+      indicatorColor: indicatorColor ?? this.indicatorColor,
       messageTextStyle: messageTextStyle ?? this.messageTextStyle,
       messageSpacing: messageSpacing ?? this.messageSpacing,
       alignment: alignment ?? this.alignment,

@@ -9,17 +9,16 @@ class ProgressStyleOptions {
     this.padding = const EdgeInsets.all(10),
     this.margin,
     this.decoration,
-    this.backgroundColor = const Color(0x4D000000),
+    this.backgroundColor = const Color(0xFF000000),
     this.borderRadius = const BorderRadius.all(Radius.circular(10)),
     this.constraints,
     this.safeArea = true,
-    this.semanticsLabel,
     this.indicatorSize = 48,
     this.indicatorConstraints,
-    this.indicatorColor = const Color(0xFF1f65f3),
+    this.indicatorColor = const Color(0xffffffff),
     this.indicatorBackgroundColor,
+    this.strokeWidth,
     this.messageTextStyle,
-    this.messageSpacing = 8,
     this.alignment = Alignment.center,
   });
 
@@ -58,11 +57,6 @@ class ProgressStyleOptions {
   /// 是否使用 SafeArea 包裹。
   final bool safeArea;
 
-  /// Optional semantics label for accessibility.
-  ///
-  /// 无障碍语义标签（Accessibility）。
-  final String? semanticsLabel;
-
   /// Progress indicator size.
   ///
   /// 进度指示器尺寸。
@@ -88,15 +82,15 @@ class ProgressStyleOptions {
   /// 文案文本样式。
   final TextStyle? messageTextStyle;
 
-  /// Spacing between indicator and message.
-  ///
-  /// 指示器与文案之间的间距。
-  final double messageSpacing;
-
   /// Alignment of the progress widget within the overlay.
   ///
   /// progress 组件在覆盖层中的对齐位置。
   final Alignment alignment;
+
+  /// Stroke width for the progress indicator.
+  ///
+  /// 进度指示器的线宽。
+  final double? strokeWidth;
 
   /// Returns a copy with the given fields replaced.
   ///
@@ -126,14 +120,12 @@ class ProgressStyleOptions {
       borderRadius: borderRadius ?? this.borderRadius,
       constraints: constraints ?? this.constraints,
       safeArea: safeArea ?? this.safeArea,
-      semanticsLabel: semanticsLabel ?? this.semanticsLabel,
       indicatorSize: indicatorSize ?? this.indicatorSize,
       indicatorConstraints: indicatorConstraints ?? this.indicatorConstraints,
       indicatorColor: indicatorColor ?? this.indicatorColor,
       indicatorBackgroundColor:
           indicatorBackgroundColor ?? this.indicatorBackgroundColor,
       messageTextStyle: messageTextStyle ?? this.messageTextStyle,
-      messageSpacing: messageSpacing ?? this.messageSpacing,
     );
   }
 }
