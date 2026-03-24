@@ -1,232 +1,105 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import 'defaults.dart';
-import 'model/toast_data_model.dart';
-import 'model/toast_type.dart';
-import 'model/toast_ui_options.dart';
-import 'statement.dart';
-import 'toast_event.dart';
-import 'ui/loading_overlay_entry.dart';
-import 'ui/message_overlay_entry.dart';
-import 'ui/progress_overlay_entry.dart';
+import 'model/toast_theme.dart';
+import 'toast.dart';
+import 'toast_manager.dart';
+import 'ui/toast_overlay.dart';
 
-/// Root wrapper that installs toast overlays above your app.
+/// Root widget that enables the toast system for the subtree below it.
 ///
-/// 用于在应用最上层安装 toast 覆盖层的根组件。
-class FlutterToastProWrapper extends StatefulWidget {
-  /// Create the toast wrapper.
-  ///
-  /// 创建 toast 包装组件。
-  const FlutterToastProWrapper({
+/// Wrap your [MaterialApp] (or [CupertinoApp]) with [ToastScope]:
+///
+/// ```dart
+/// ToastScope(
+///   child: MaterialApp(home: MyHomePage()),
+/// )
+/// ```
+///
+/// Then use the [Toast] API anywhere:
+///
+/// ```dart
+/// Toast.success('Saved!');
+/// ```
+class ToastScope extends StatefulWidget {
+  const ToastScope({
     super.key,
     required this.child,
-    this.uiOptions = const ToastUiOptions(),
+    this.theme = const ToastThemeData(),
     this.messageBuilder,
-    this.progressBuilder,
     this.loadingBuilder,
+    this.progressBuilder,
   });
 
-  /// Standard UI options.
-  ///
-  /// 标准 UI 配置（包含 message/loading/progress 各自的 overlay+style 设置）。
-  final ToastUiOptions uiOptions;
-
   /// Your app widget.
-  ///
-  /// 应用的子组件（通常是 MaterialApp/CupertinoApp）。
   final Widget child;
 
-  /// Custom message builder.
-  ///
-  /// 自定义 message toast 构建器。
+  /// Theme configuration for all toast types.
+  final ToastThemeData theme;
+
+  /// Custom builder for message toasts.
   final ToastMessageBuilder? messageBuilder;
 
-  /// Custom progress builder.
-  ///
-  /// 自定义 progress toast 构建器。
-  final ToastProgressBuilder? progressBuilder;
-
-  /// Custom loading builder.
-  ///
-  /// 自定义 loading toast 构建器。
+  /// Custom builder for loading toasts.
   final ToastLoadingBuilder? loadingBuilder;
 
+  /// Custom builder for progress toasts.
+  final ToastProgressBuilder? progressBuilder;
+
   @override
-  State<FlutterToastProWrapper> createState() => _FlutterToastProWrapperState();
+  State<ToastScope> createState() => _ToastScopeState();
 }
 
-class _FlutterToastProWrapperState extends State<FlutterToastProWrapper> {
-  /// Overlay controller for message toasts.
-  ///
-  /// message toast 的 Overlay 控制器。
-  late final OverlayPortalController messageOverlayController;
-
-  /// Overlay controller for progress toasts.
-  ///
-  /// progress toast 的 Overlay 控制器。
-  late final OverlayPortalController progressOverlayController;
-
-  /// Overlay controller for loading toasts.
-  ///
-  /// loading toast 的 Overlay 控制器。
-  late final OverlayPortalController loadingOverlayController;
-
-  /// Subscription for show events.
-  ///
-  /// show 事件订阅。
-  StreamSubscription<ToastDataModel>? _showSub;
-
-  /// Subscription for hide events.
-  ///
-  /// hide 事件订阅。
-  StreamSubscription<ToastType>? _hideSub;
-
-  /// Timer used to auto-close message toasts.
-  ///
-  /// 用于 message toast 自动关闭的计时器。
-  Timer? closeTimer;
+class _ToastScopeState extends State<ToastScope> {
+  late final ToastManager _manager;
 
   @override
   void initState() {
     super.initState();
-
-    // Init overlay controllers.
-    //
-    // 初始化 overlay 控制器。
-    messageOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_message",
-    );
-    progressOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_progress",
-    );
-    loadingOverlayController = OverlayPortalController(
-      debugLabel: "flutter_toast_loading",
-    );
-
-    // Listen to events.
-    //
-    // 监听事件。
-    _showSub = ToastEvent.showMessages.listen(_showEventListen);
-    _hideSub = ToastEvent.hideMessages.listen(_hideEventListen);
+    _manager = ToastManager(theme: widget.theme);
+    Toast.attach(_manager);
   }
 
-  /// Schedule message auto-close.
-  ///
-  /// 安排 message 自动关闭。
-  void _scheduleMessageClose(Duration duration) {
-    closeTimer?.cancel();
-    closeTimer = Timer(duration, () {
-      ToastEvent.showMessages.add(ToastDataModel.empty());
-      messageOverlayController.hide();
-      closeTimer = null;
-    });
-  }
-
-  /// Current UI options.
-  ///
-  /// 当前 UI 配置。
-  ToastUiOptions get _ui => widget.uiOptions;
-
-  /// Handle show events.
-  ///
-  /// 处理 show 事件。
-  void _showEventListen(ToastDataModel data) {
-    switch (data.type) {
-      case ToastType.message:
-        if (data.message != null) {
-          messageOverlayController.show();
-          if (_ui.message.autoClose) {
-            _scheduleMessageClose(
-              data.closeDuration ?? _ui.message.closeDuration,
-            );
-          }
-        }
-        break;
-      case ToastType.loading:
-        closeTimer?.cancel();
-        closeTimer = null;
-        loadingOverlayController.show();
-        break;
-      case ToastType.progress:
-        closeTimer?.cancel();
-        closeTimer = null;
-        progressOverlayController.show();
-        break;
-      case ToastType.none:
-        closeTimer?.cancel();
-        closeTimer = null;
-        break;
-    }
-  }
-
-  /// Handle hide events.
-  ///
-  /// 处理 hide 事件。
-  void _hideEventListen(ToastType type) {
-    switch (type) {
-      case ToastType.message:
-        closeTimer?.cancel();
-        closeTimer = null;
-        messageOverlayController.hide();
-        break;
-      case ToastType.loading:
-        ToastEvent.showMessages.add(ToastDataModel.empty());
-        loadingOverlayController.hide();
-        break;
-      case ToastType.progress:
-        ToastEvent.showMessages.add(ToastDataModel.empty());
-        progressOverlayController.hide();
-        break;
-      case ToastType.none:
-        break;
+  @override
+  void didUpdateWidget(covariant ToastScope oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.theme != widget.theme) {
+      _manager.theme = widget.theme;
     }
   }
 
   @override
   void dispose() {
-    closeTimer?.cancel();
-    _showSub?.cancel();
-    _hideSub?.cancel();
+    Toast.detach();
+    _manager.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ui = _ui;
-
-    // Resolve default message style.
-    //
-    // 解析 message 默认样式。
-    final messageStyle =
-        ui.message.style ?? FlutterToastProDefaults.messageStyle();
-
     return Directionality(
-      textDirection: ui.textDirection,
+      textDirection: TextDirection.ltr,
       child: Stack(
         children: [
           widget.child,
+          // The overlay sits above the entire app and rebuilds as
+          // ToastManager notifies.
           Overlay(
             initialEntries: [
-              messageOverlayEntry(
-                controller: messageOverlayController,
-                builder: widget.messageBuilder,
-                overlay: ui.message.overlay,
-                effectType: ui.message.effectType,
-                styleOptions: messageStyle,
-              ),
-              loadingOverlayEntry(
-                controller: loadingOverlayController,
-                builder: widget.loadingBuilder,
-                overlay: ui.loading.overlay,
-                styleOptions: ui.loading.style,
-              ),
-              progressOverlayEntry(
-                controller: progressOverlayController,
-                builder: widget.progressBuilder,
-                overlay: ui.progress.overlay,
-                styleOptions: ui.progress.style,
+              OverlayEntry(
+                builder: (context) => ListenableBuilder(
+                  listenable: _manager,
+                  builder: (context, _) {
+                    if (_manager.items.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return ToastOverlay(
+                      manager: _manager,
+                      messageBuilder: widget.messageBuilder,
+                      loadingBuilder: widget.loadingBuilder,
+                      progressBuilder: widget.progressBuilder,
+                    );
+                  },
+                ),
               ),
             ],
           ),

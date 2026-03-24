@@ -1,3 +1,35 @@
+## 3.0.0
+
+### ⚠️ Breaking Changes
+
+* **Complete API redesign** — `FlutterToastPro` → `Toast`, `FlutterToastProWrapper` → `ToastScope`
+* **Removed rxdart dependency** — zero external dependencies, pure Flutter + Dart
+* **Removed `EffectType`** — replaced by Material 3 `ColorScheme` auto-adaptation
+* **Removed old options classes** — `ToastUiOptions`, `ToastMessageOptions`, `OverlayOptions`, etc. replaced by unified `ToastThemeData`
+
+### ✨ New Features
+
+* **Stackable toasts** — multiple message toasts displayed simultaneously with smooth stacking animations
+* **Glassmorphism** — frosted glass (backdrop blur) styling, toggle via `enableGlassmorphism`
+* **Swipe to dismiss** — swipe up/down to close message toasts, toggle via `enableSwipeToDismiss`
+* **Future-based API** — all `Toast.show/success/warning/error/loading` return `Future<void>` that completes on dismiss
+* **Action buttons** — attach `ToastAction(label, onPressed)` to any message toast (e.g. "Undo")
+* **Per-toast positioning** — `ToastPosition.top`, `.center`, `.bottom` per call
+* **Material 3 design** — auto light/dark theme adaptation via `Theme.of(context).colorScheme`
+* **Default icons** — type-specific icons (info, check, warning, error) shown by default
+* **Custom builders** — `ToastMessageBuilder`, `ToastLoadingBuilder`, `ToastProgressBuilder`
+* **In-place progress updates** — calling `Toast.progress()` repeatedly updates smoothly without flicker
+
+### 🗑️ Removed
+
+* `rxdart` and `rxdart_flutter` dependencies
+* `FlutterToastPro` sealed class (replaced by `Toast`)
+* `FlutterToastProWrapper` (replaced by `ToastScope`)
+* `FlutterToastProDefaults`
+* `EffectType`, `ToastType` enums
+* `ToastEvent` global event bus
+* All old option classes: `ToastUiOptions`, `ToastMessageOptions`, `ToastLoadingOptions`, `ToastProgressOptions`, `OverlayOptions`, `ToastAnimationOptions`, `MessageStyleOptions`, `LoadingStyleOptions`, `ProgressStyleOptions`
+
 ## 2.2.0
 
 * Add new features and improvements to the toast system, including enhanced customization options and improved performance

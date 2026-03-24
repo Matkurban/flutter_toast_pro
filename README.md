@@ -1,170 +1,203 @@
 # Flutter Toast Pro
 
-> Lightweight, overlay-based toast / loading / progress utilities driven by `OverlayPortal` and a global `FlutterToastProWrapper`.
+> A high-performance, beautiful toast / loading / progress plugin for Flutter — with **zero external dependencies**, glassmorphism styling, stackable messages, and swipe-to-dismiss.
 
-> 依托 `OverlayPortal` 与全局 `FlutterToastProWrapper` 的轻量吐司、加载与进度组件。
+> 高性能、精美的 Flutter 消息提示插件 — **零外部依赖**，毛玻璃效果，消息堆叠，滑动关闭。
 
-> ❗ **注意**：message,loading,progress 三类 Overlay 互斥显示，调用任意一类时会自动关闭其他两类。
+## ✨ Features 特性
 
-> ❗ **Note**: message, loading, and progress overlays are mutually exclusive; invoking one type will automatically dismiss the others.
+- 🎯 **Zero dependencies** — pure Flutter, no rxdart or third-party packages
+- 🧊 **Glassmorphism** — frosted glass effect with `BackdropFilter`, toggleable
+- 📚 **Stackable toasts** — multiple messages displayed simultaneously with smooth animations
+- 👆 **Swipe to dismiss** — swipe up/down to close message toasts
+- 🎨 **Material 3** — auto-adapts to light/dark theme via `ColorScheme`
+- ⏱️ **Future-based API** — `await Toast.success('Done')` resolves when toast is dismissed
+- 🔧 **Fully customizable** — theme everything or provide your own builders
+- 🏷️ **Action buttons** — attach "Undo"-style actions to any toast
+- 📍 **Flexible positioning** — top, center, or bottom per-toast
 
 ## 📦 Installation 安装
-Add the dependency manually or run `flutter pub add`:
-
-在 `pubspec.yaml` 中添加依赖，或执行下方命令：
 
 ```yaml
 dependencies:
-  flutter_toast_pro: ^latest
+  flutter_toast_pro: ^3.0.0
 ```
 
 ```bash
-  flutter pub add flutter_toast_pro
+flutter pub add flutter_toast_pro
 ```
 
 ## 🚀 Quick Start 快速开始
-1. Wrap your root widget (e.g., `MaterialApp`) with `FlutterToastProWrapper`.
 
-   使用 `FlutterToastProWrapper` 包裹根 Widget（如 `MaterialApp`）。
-2. Invoke static helpers such as `FlutterToast.showSuccessMessage` wherever needed.
-
-   在任意位置调用 `FlutterToast` 静态方法即可。
+### 1. Wrap your app 包裹应用
 
 ```dart
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+import 'package:flutter_toast_pro/flutter_toast_pro.dart';
 
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.light,
-      home: const MyHomePage(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context),
-          child: Material(
-            child: FlutterToastProWrapper(
-              uiOptions: ToastUiOptions(
-                message: ToastMessageOptions(
-                  effectType: EffectType.primary,
-                  style: FlutterToastProDefaults.messageStyle().copyWith(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  ),
-                ),
-                loading: const ToastLoadingOptions(
-                  overlay: OverlayOptions(overlayColor: Colors.transparent, ignoring: true),
-                  style: LoadingStyleOptions(
-                    constraints: BoxConstraints(minWidth: 100, minHeight: 100),
-                  ),
-                ),
-              ),
-              child: child ?? SizedBox.shrink(),
-            ),
-          ),
-        );
-      },
+    return ToastScope(
+      child: MaterialApp(
+        home: MyHomePage(),
+      ),
     );
   }
 }
 ```
 
+### 2. Show toasts anywhere 随处调用
+
+```dart
+// Basic messages
+Toast.info('This is an info message');
+Toast.success('Saved successfully!');
+Toast.warning('Please check your input');
+Toast.error('Something went wrong');
+
+// With action button
+Toast.show(
+  'Item deleted',
+  type: MessageType.info,
+  action: ToastAction(
+    label: 'Undo',
+    onPressed: () => restoreItem(),
+  ),
+);
+
+// Await dismissal
+await Toast.error('Connection failed');
+print('User dismissed the error toast');
+
+// Loading
+Toast.loading(message: 'Please wait...');
+await fetchData();
+Toast.hideLoading();
+
+// Progress
+for (int i = 0; i <= 100; i++) {
+  Toast.progress(i / 100, message: 'Downloading $i%');
+  await Future.delayed(Duration(milliseconds: 20));
+}
+Toast.hideProgress();
+```
+
 ## 🔔 Message API 消息接口
 
-| Method / 方法                                                      | Default Type / 默认类型     | Key Params / 主要参数                                        | Notes / 说明                                                                      |
-|------------------------------------------------------------------|-------------------------|----------------------------------------------------------|---------------------------------------------------------------------------------|
-| `FlutterToast.showMessage`                                       | `MessageType.info`      | `message`, `closeDuration`, `type`, `alignment`, `extra` | Basic toast with configurable semantics and timer. 基础文本吐司，可自定义语义与倒计时。           |
-| `showSuccessMessage` / `showWarningMessage` / `showErrorMessage` | Semantic presets / 语义预设 | Same as above / 同上                                       | Sugar helpers that map to success, warning, and error styles. 语法糖，对应成功、警告、错误配色。 |
-| `hideMessage()`                                                  | –                       | –                                                        | Manually dismiss the current toast and cancel timers. 手动关闭当前消息并终止定时器。           |
+| Method | Type | Description |
+|--------|------|-------------|
+| `Toast.show(message, {type, icon, duration, position, action})` | Configurable | General-purpose toast 通用消息 |
+| `Toast.info(message)` | Info | Informational toast 信息提示 |
+| `Toast.success(message)` | Success | Success toast 成功提示 |
+| `Toast.warning(message)` | Warning | Warning toast 警告提示 |
+| `Toast.error(message)` | Error | Error toast 错误提示 |
+| `Toast.dismiss(id)` | — | Dismiss a specific toast 关闭指定消息 |
+| `Toast.dismissAll()` | — | Dismiss all toasts 关闭全部消息 |
 
-> Alignment defaults to `Alignment.topCenter`; `extra` carries arbitrary payloads for custom builders.
+All message methods return `Future<void>` that completes when the toast is dismissed.
 
-> 默认对齐为 `Alignment.topCenter`，`extra` 可传入任意扩展数据供自定义 Builder 使用。
+所有消息方法返回 `Future<void>`，在 toast 被关闭时完成。
 
-### Auto Close 自动关闭
-- `FlutterToastProWrapper.autoClose`: enable or disable auto dismissal for message toasts (default: true).
-  控制是否对消息吐司启用自动关闭（默认启用，仅对 `ToastType.message` 生效）。
-- `FlutterToastProWrapper.closeDuration`: global fallback duration, overridable per call.
-  全局默认倒计时，可在 `showMessage` 时单独指定。
+### Parameters 参数
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | `String` | required | Display text 显示文本 |
+| `type` | `MessageType` | `info` | Severity (info/success/warning/error) 类型 |
+| `icon` | `IconData?` | per-type default | Custom icon 自定义图标 |
+| `duration` | `Duration?` | 3 seconds | Auto-dismiss duration 自动关闭时长 |
+| `position` | `ToastPosition?` | theme default | top / center / bottom 位置 |
+| `action` | `ToastAction?` | null | Action button 操作按钮 |
+| `swipeToDismiss` | `bool` | true | Enable swipe gesture 启用滑动关闭 |
 
 ## ⏳ Loading & Progress 加载与进度
 
-| Method / 方法                                                                                                              | Purpose / 用途                                                  |
-|--------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------|
-| `FlutterToast.showLoading({String? message, AlignmentGeometry alignment, Map<String, dynamic> extra})`                   | Show a modal loading overlay with optional text. 展示可选文案的加载遮罩。 |
-| `FlutterToast.hideLoading()`                                                                                             | Hide the active loading overlay. 隐藏当前加载层。                     |
-| `FlutterToast.showProgress(double progress, {String? message, AlignmentGeometry alignment, Map<String, dynamic> extra})` | Display determinate progress (0.0–1.0). 展示 0.0~1.0 的确定性进度。    |
-| `FlutterToast.hideProgress()`                                                                                            | Dismiss the progress overlay. 关闭进度弹层。                         |
+| Method | Description |
+|--------|-------------|
+| `Toast.loading({message})` | Show modal loading indicator 显示加载指示器 |
+| `Toast.hideLoading()` | Dismiss loading 隐藏加载 |
+| `Toast.progress(value, {message})` | Show/update progress (0.0–1.0) 显示/更新进度 |
+| `Toast.hideProgress()` | Dismiss progress 隐藏进度 |
 
-Default widgets appear centered with a modal barrier; feel free to swap in custom builders just like messages.
+Loading and progress are **globally unique** — showing a new one replaces the previous.
 
-默认 UI 为屏幕中心的模态遮罩，可像消息一样完全替换为自定义组件。
+加载和进度是**全局唯一**的 — 显示新的会替换之前的。
 
-## 🎨 Custom UI 自定义界面
-`FlutterToastProWrapper` exposes three builders. Supply your own widgets to align, animate, or theme the overlays.
-
-三个 Builder 可用于完全定制 UI，以下示例演示如何替换默认消息组件：
+## 🎨 Theming 主题配置
 
 ```dart
-FlutterToastProWrapper(
-  messageBuilder: (
-    BuildContext context,
-    String message,
-    MessageType type,
-    AlignmentGeometry alignment,
-    Map<String, dynamic> extra,
-  ) {
-    return Align(
-      alignment: alignment,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Text(message, style: const TextStyle(color: Colors.white)),
-        ),
-      ),
-    );
-  },
-  loadingBuilder: (context, message, alignment, extra) => CustomLoading(message: message),
-  progressBuilder: (context, progress, message, alignment, extra) => CustomProgress(value: progress),
+ToastScope(
+  theme: ToastThemeData(
+    position: ToastPosition.top,
+    maxVisibleToasts: 5,
+    spacing: 8,
+    animationDuration: Duration(milliseconds: 300),
+    enableGlassmorphism: true,    // frosted glass effect
+    enableSwipeToDismiss: true,   // swipe to close
+    messageTheme: MessageToastTheme(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: EdgeInsets.symmetric(horizontal: 16),
+      borderRadius: BorderRadius.circular(16),
+      blurSigma: 20,
+      showIcon: true,
+      elevation: 0,
+      // Override colors per-type:
+      successColor: Color(0xFF16A34A),
+      errorColor: Color(0xFFEF4444),
+    ),
+    loadingTheme: LoadingToastTheme(
+      overlayColor: Color(0x33000000),
+      indicatorSize: 28,
+    ),
+    progressTheme: ProgressToastTheme(
+      indicatorSize: 56,
+      strokeWidth: 4,
+    ),
+  ),
   child: MaterialApp(...),
-);
+)
 ```
 
-- The wrapper covers the full screen; align widgets according to the provided `alignment`.
+## 🛠 Custom Builders 自定义构建器
 
-  Wrapper 铺满全屏，根据传入的 `alignment` 自行定位。
-- Use `extra` can be extended data such as custom data, IDs, etc. at the business layer.
+Replace any default widget with your own:
 
-  `extra` 可在业务层传入自定义的数据、 ID 等扩展数据。
+使用自定义 Builder 完全替换默认 UI：
 
-## 截图
+```dart
+ToastScope(
+  messageBuilder: (context, item) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.black87,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(item.message, style: TextStyle(color: Colors.white)),
+    );
+  },
+  loadingBuilder: (context, item) => MyCustomLoading(message: item.message),
+  progressBuilder: (context, item) => MyCustomProgress(value: item.progress),
+  child: MaterialApp(...),
+)
+```
 
-### Message 消息
+## 🔄 Migration from v2.x 从 v2.x 迁移
 
-- `EffectType`默认为`EffectType.primaryLight`
-
-| MessageType | EffectType.primary                                                                                              | EffectType.primaryLight                                                                                      |
-|-------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| info        | <img src="doc/screenshot/Screenshot_20251206_210127.jpg" alt="info primary" width="375" height="812"/>          | <img src="doc/screenshot/Screenshot_20251206_210249.jpg" alt="info primary light" width="375" height="812"/> |
-| success     | <img src="doc/screenshot/Screenshot_20251206_210133.jpg" alt="success primary light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210254.jpg" alt="success primary" width="375" height="812"/>    |
-| waring      | <img src="doc/screenshot/Screenshot_20251206_210130.jpg" alt="warning primary light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210252.jpg" alt="warning primary" width="375" height="812"/>    |
-| error       | <img src="doc/screenshot/Screenshot_20251206_210136.jpg" alt="error primary light" width="375" height="812"/>   | <img src="doc/screenshot/Screenshot_20251206_210257.jpg" alt="error primary" width="375" height="812"/>      |
-
-### Loading  加载中
-
-| <img src="doc/screenshot/Screenshot_20251206_210139.jpg" alt="loading light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_210209.jpg" alt="loading primary" width="375" height="812"/> |
-|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-
-### progress 进度条
-
-| <img src="doc/screenshot/Screenshot_20251206_210226.jpg" alt="progress light" width="375" height="812"/> | <img src="doc/screenshot/Screenshot_20251206_213227.jpg" alt="progress primary" width="375" height="812"/> |
-|----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| v2.x | v3.0 |
+|------|------|
+| `FlutterToastProWrapper(child: ...)` | `ToastScope(child: ...)` |
+| `FlutterToastPro.showMessage('text')` | `Toast.show('text')` |
+| `FlutterToastPro.showSuccessMessage('text')` | `Toast.success('text')` |
+| `FlutterToastPro.showWaringMessage('text')` | `Toast.warning('text')` |
+| `FlutterToastPro.showErrorMessage('text')` | `Toast.error('text')` |
+| `FlutterToastPro.showLoading()` | `Toast.loading()` |
+| `FlutterToastPro.hideLoading()` | `Toast.hideLoading()` |
+| `FlutterToastPro.showProgress(0.5)` | `Toast.progress(0.5)` |
+| `FlutterToastPro.hideProgress()` | `Toast.hideProgress()` |
+| `ToastUiOptions(...)` | `ToastThemeData(...)` |
+| `EffectType.primary / primaryLight` | Removed — uses Material 3 ColorScheme |
+| `rxdart` dependency | Removed — zero dependencies |
 
 
 ## 📄 License 许可证
