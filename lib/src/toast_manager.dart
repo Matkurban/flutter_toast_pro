@@ -138,12 +138,10 @@ class ToastManager extends ChangeNotifier {
   }
 
   void _enforceMaxVisible() {
-    final messages = _items.whereType<MessageToastItem>().toList(
-      growable: false,
-    );
-    while (messages.length > theme.maxVisibleToasts) {
-      final oldest = messages.removeAt(0);
-      dismiss(oldest.id);
+    final messages = _items.whereType<MessageToastItem>().toList();
+    var excess = messages.length - theme.maxVisibleToasts;
+    for (var i = 0; i < excess; i++) {
+      dismiss(messages[i].id);
     }
   }
 

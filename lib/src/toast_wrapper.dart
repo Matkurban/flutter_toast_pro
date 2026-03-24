@@ -15,7 +15,7 @@ import 'ui/toast_overlay.dart';
 /// )
 /// ```
 ///
-/// Then use the [Toast] API anywhere:
+/// Then use the [FlutterToastPro] API anywhere:
 ///
 /// ```dart
 /// Toast.success('Saved!');
@@ -56,7 +56,7 @@ class _ToastScopeState extends State<ToastScope> {
   void initState() {
     super.initState();
     _manager = ToastManager(theme: widget.theme);
-    Toast.attach(_manager);
+    FlutterToastPro.attach(_manager);
   }
 
   @override
@@ -69,7 +69,7 @@ class _ToastScopeState extends State<ToastScope> {
 
   @override
   void dispose() {
-    Toast.detach();
+    FlutterToastPro.detach();
     _manager.dispose();
     super.dispose();
   }

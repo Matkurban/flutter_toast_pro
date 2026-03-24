@@ -58,30 +58,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               FilledButton(
-                onPressed: () => Toast.info('这是一条信息提示'),
+                onPressed: () => FlutterToastPro.info('这是一条信息提示'),
                 child: const Text('Info 消息'),
               ),
               FilledButton(
-                onPressed: () => Toast.success('操作成功'),
+                onPressed: () => FlutterToastPro.success('操作成功'),
                 child: const Text('Success 消息'),
               ),
               FilledButton(
-                onPressed: () => Toast.warning('请注意！'),
+                onPressed: () => FlutterToastPro.warning('请注意！'),
                 child: const Text('Warning 消息'),
               ),
               FilledButton(
-                onPressed: () => Toast.error('出错了！'),
+                onPressed: () => FlutterToastPro.error('出错了！'),
                 child: const Text('Error 消息'),
               ),
               FilledButton(
                 onPressed: () {
-                  Toast.show(
+                  FlutterToastPro.show(
                     '支持操作按钮的提示',
                     type: MessageType.info,
                     duration: const Duration(seconds: 5),
                     action: ToastAction(
                       label: '撤销',
-                      onPressed: () => Toast.success('已撤销'),
+                      onPressed: () => FlutterToastPro.success('已撤销'),
                     ),
                   );
                 },
@@ -90,10 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
               FilledButton(
                 onPressed: () {
                   // Rapid-fire: stacking demo.
-                  Toast.info('消息 1');
-                  Toast.success('消息 2');
-                  Toast.warning('消息 3');
-                  Toast.error('消息 4');
+                  FlutterToastPro.info('消息 1');
+                  FlutterToastPro.success('消息 2');
+                  FlutterToastPro.warning('消息 3');
+                  FlutterToastPro.error('消息 4');
                 },
                 child: const Text('堆叠显示(快速4条)'),
               ),
@@ -104,8 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               FilledButton(
-                onPressed: () =>
-                    Toast.show('底部消息', position: ToastPosition.bottom),
+                onPressed: () => FlutterToastPro.show(
+                  '底部消息',
+                  position: ToastPosition.bottom,
+                ),
                 child: const Text('底部消息'),
               ),
 
@@ -115,11 +117,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               FilledButton(
-                onPressed: () => Toast.loading(message: '加载中...'),
+                onPressed: () => FlutterToastPro.loading(message: '加载中...'),
                 child: const Text('显示加载'),
               ),
               FilledButton(
-                onPressed: () => Toast.hideLoading(),
+                onPressed: () => FlutterToastPro.hideLoading(),
                 child: const Text('隐藏加载'),
               ),
 
@@ -132,21 +134,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () async {
                   for (int i = 0; i <= 100; i++) {
                     await Future.delayed(const Duration(milliseconds: 20));
-                    Toast.progress(i / 100, message: '下载中 $i%');
+                    FlutterToastPro.progress(i / 100, message: '下载中 $i%');
                   }
-                  Toast.hideProgress();
-                  Toast.success('下载完成！');
+                  FlutterToastPro.hideProgress();
+                  FlutterToastPro.success('下载完成！');
                 },
                 child: const Text('模拟进度'),
               ),
               FilledButton(
-                onPressed: () => Toast.hideProgress(),
+                onPressed: () => FlutterToastPro.hideProgress(),
                 child: const Text('隐藏进度'),
               ),
 
               const Divider(),
               FilledButton(
-                onPressed: () => Toast.dismissAll(),
+                onPressed: () => FlutterToastPro.dismissAll(),
                 child: const Text('关闭全部'),
               ),
             ],

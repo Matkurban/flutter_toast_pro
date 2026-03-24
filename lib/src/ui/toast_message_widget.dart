@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import '../model/message_type.dart';
 import '../model/toast_action.dart';
 import '../model/toast_theme.dart';
-import 'glass_container.dart';
 
-/// Default message toast widget with Material 3 + glassmorphism styling.
+/// Default message toast widget with Material 3 tonal card styling.
+///
+/// Uses opaque surface-tinted backgrounds for reliable contrast on any
+/// background – backdrop blur is intentionally NOT used for messages because
+/// it looks poor when the underlying content is a uniform color.
 class DefaultMessageWidget extends StatelessWidget {
   const DefaultMessageWidget({
     super.key,
@@ -20,7 +23,7 @@ class DefaultMessageWidget extends StatelessWidget {
   final String message;
   final MessageType type;
   final MessageToastTheme theme;
-  final bool enableGlass;
+  final bool enableGlass; // kept for API compat; does not enable backdrop blur
   final IconData? icon;
   final ToastAction? action;
 
@@ -30,7 +33,7 @@ class DefaultMessageWidget extends StatelessWidget {
       MessageType.info => theme.infoColor ?? cs.primary,
       MessageType.success => theme.successColor ?? const Color(0xFF16A34A),
       MessageType.warning => theme.warningColor ?? const Color(0xFFF59E0B),
-      MessageType.error => theme.errorColor ?? const Color(0xFFEF4444),
+      MessageType.error => theme.errorColor ?? cs.error,
     };
   }
 
@@ -50,16 +53,13 @@ class DefaultMessageWidget extends StatelessWidget {
     final color = _colorFor(type, cs);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bgColor = enableGlass
-        ? (isDark
-              ? color.withValues(alpha: 0.15)
-              : color.withValues(alpha: 0.08))
-        : (isDark
-              ? color.withValues(alpha: 0.25)
-              : color.withValues(alpha: 0.12));
+    // Material 3 tonal card: opaque tinted surface background.
+    final bgColor = Color.alphaBlend(
+      color.withValues(alpha: isDark ? 0.18 : 0.10),
+      isDark ? cs.surfaceContainer : Colors.white,
+    );
 
-    final textColor = isDark ? Colors.white : color;
-    final iconColor = color;
+    final textColor = isDark ? Colors.white.withValues(alpha: 0.92) : color;
 
     final resolvedTextStyle = (theme.textStyle ?? const TextStyle()).copyWith(
       color: textColor,
@@ -67,23 +67,31 @@ class DefaultMessageWidget extends StatelessWidget {
       fontWeight: FontWeight.w500,
     );
 
-    return GlassContainer(
-      enableBlur: enableGlass,
-      blurSigma: theme.blurSigma,
-      backgroundColor: bgColor,
-      borderRadius: theme.borderRadius.resolve(Directionality.of(context)),
-      padding: theme.padding,
+    final borderRadius = theme.borderRadius.resolve(Directionality.of(context));
+
+    return Container(
       margin: theme.margin,
-      elevation: theme.elevation,
-      border: Border.all(
-        color: color.withValues(alpha: isDark ? 0.2 : 0.15),
-        width: 0.5,
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: borderRadius,
+        border: Border.all(
+          color: color.withValues(alpha: isDark ? 0.15 : 0.12),
+          width: 0.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
+      padding: theme.padding,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (theme.showIcon) ...[
-            Icon(icon ?? _defaultIconFor(type), color: iconColor, size: 20),
+            Icon(icon ?? _defaultIconFor(type), color: color, size: 20),
             const SizedBox(width: 10),
           ],
           Flexible(

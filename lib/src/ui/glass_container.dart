@@ -39,15 +39,15 @@ class GlassContainer extends StatelessWidget {
     final bgColor =
         backgroundColor ??
         (isDark
-            ? Colors.white.withValues(alpha: 0.12)
-            : Colors.white.withValues(alpha: 0.72));
+            ? Colors.white.withValues(alpha: 0.1)
+            : Colors.white.withValues(alpha: 0.25));
 
     final resolvedBorder =
         border ??
         Border.all(
           color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.white.withValues(alpha: 0.5),
+              ? Colors.white.withValues(alpha: 0.08)
+              : Colors.white.withValues(alpha: 0.3),
           width: 0.5,
         );
 
@@ -55,7 +55,7 @@ class GlassContainer extends StatelessWidget {
       margin: margin,
       constraints: constraints,
       decoration: BoxDecoration(
-        color: enableBlur ? bgColor : bgColor.withValues(alpha: 0.95),
+        color: bgColor,
         borderRadius: borderRadius,
         border: resolvedBorder,
         boxShadow: elevation > 0

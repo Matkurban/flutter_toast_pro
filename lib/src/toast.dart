@@ -11,11 +11,11 @@ import 'toast_manager.dart';
 /// Before calling any method, ensure [ToastScope] is in the widget tree.
 ///
 /// ```dart
-/// Toast.show('Hello');
-/// Toast.success('Saved!');
-/// await Toast.loading(message: 'Please wait…');
+/// FlutterToastPro.show('Hello');
+/// FlutterToastPro.success('Saved!');
+/// await FlutterToastPro.loading(message: 'Please wait…');
 /// ```
-sealed class Toast {
+sealed class FlutterToastPro {
   /// The global [ToastManager] attached by [ToastScope].
   /// Throws if [ToastScope] has not been mounted yet.
   static ToastManager? _manager;

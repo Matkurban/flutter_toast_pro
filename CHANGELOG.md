@@ -1,3 +1,10 @@
+## 3.0.1
+
+### 🐛 Bug Fixes
+
+* Fixed `Unsupported operation: removeAt` crash when stacking more toasts than `maxVisibleToasts`. The internal `_enforceMaxVisible` was calling `removeAt` on an unmodifiable list.
+* Fixed message toast visual: replaced `BackdropFilter` glassmorphism with Material 3 tonal card styling (opaque tinted background + shadow) for reliable contrast on any background.
+
 ## 3.0.0
 
 ### ⚠️ Breaking Changes
