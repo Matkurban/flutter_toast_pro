@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
         maxVisibleToasts: 5,
         enableGlassmorphism: true,
         enableSwipeToDismiss: true,
-        messageTheme: MessageToastTheme(margin: EdgeInsets.symmetric(horizontal: 16)),
+        messageTheme: MessageToastTheme(
+          margin: EdgeInsets.symmetric(horizontal: 16),
+        ),
         loadingTheme: LoadingToastTheme(overlayColor: Color(0x33000000)),
       ),
       child: MaterialApp(
@@ -102,12 +104,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               FilledButton(
-                onPressed: () => FlutterToastPro.show('底部消息', position: ToastPosition.bottom),
+                onPressed: () => FlutterToastPro.show(
+                  '底部消息',
+                  position: ToastPosition.bottom,
+                ),
                 child: const Text('底部消息'),
               ),
 
               const Divider(),
-              const Text('Loading', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              const Text(
+                'Loading',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
               FilledButton(
                 onPressed: () => FlutterToastPro.loading(message: '加载中...'),
                 child: const Text('显示加载'),
@@ -118,7 +126,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               const Divider(),
-              const Text('Progress', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              const Text(
+                'Progress',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
               FilledButton(
                 onPressed: () async {
                   for (int i = 0; i <= 100; i++) {

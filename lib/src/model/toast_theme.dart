@@ -76,10 +76,8 @@ class ToastThemeData {
       spacing: spacing ?? this.spacing,
       animationDuration: animationDuration ?? this.animationDuration,
       animationCurve: animationCurve ?? this.animationCurve,
-      reverseAnimationDuration:
-          reverseAnimationDuration ?? this.reverseAnimationDuration,
-      reverseAnimationCurve:
-          reverseAnimationCurve ?? this.reverseAnimationCurve,
+      reverseAnimationDuration: reverseAnimationDuration ?? this.reverseAnimationDuration,
+      reverseAnimationCurve: reverseAnimationCurve ?? this.reverseAnimationCurve,
       enableGlassmorphism: enableGlassmorphism ?? this.enableGlassmorphism,
       enableSwipeToDismiss: enableSwipeToDismiss ?? this.enableSwipeToDismiss,
       messageTheme: messageTheme ?? this.messageTheme,
@@ -364,8 +362,7 @@ class ProgressToastTheme {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       indicatorSize: indicatorSize ?? this.indicatorSize,
       indicatorColor: indicatorColor ?? this.indicatorColor,
-      indicatorBackgroundColor:
-          indicatorBackgroundColor ?? this.indicatorBackgroundColor,
+      indicatorBackgroundColor: indicatorBackgroundColor ?? this.indicatorBackgroundColor,
       strokeWidth: strokeWidth ?? this.strokeWidth,
       messageTextStyle: messageTextStyle ?? this.messageTextStyle,
       overlayColor: overlayColor ?? this.overlayColor,

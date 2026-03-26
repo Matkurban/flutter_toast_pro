@@ -24,16 +24,12 @@ class DefaultProgressWidget extends StatelessWidget {
 
     final bgColor =
         theme.backgroundColor ??
-        (isDark
-            ? Colors.black.withValues(alpha: 0.65)
-            : Colors.white.withValues(alpha: 0.85));
+        (isDark ? Colors.black.withValues(alpha: 0.65) : Colors.white.withValues(alpha: 0.85));
 
     final indicatorColor =
-        theme.indicatorColor ??
-        (isDark ? Colors.white : Theme.of(context).colorScheme.primary);
+        theme.indicatorColor ?? (isDark ? Colors.white : Theme.of(context).colorScheme.primary);
 
-    final indicatorBg =
-        theme.indicatorBackgroundColor ?? indicatorColor.withValues(alpha: 0.2);
+    final indicatorBg = theme.indicatorBackgroundColor ?? indicatorColor.withValues(alpha: 0.2);
 
     final textColor = isDark ? Colors.white70 : Colors.black87;
 
@@ -76,9 +72,7 @@ class DefaultProgressWidget extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               message!,
-              style:
-                  theme.messageTextStyle ??
-                  TextStyle(color: textColor, fontSize: 13),
+              style: theme.messageTextStyle ?? TextStyle(color: textColor, fontSize: 13),
               textAlign: TextAlign.center,
             ),
           ],

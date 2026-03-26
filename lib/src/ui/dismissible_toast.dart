@@ -25,8 +25,7 @@ class DismissibleToast extends StatefulWidget {
   State<DismissibleToast> createState() => _DismissibleToastState();
 }
 
-class _DismissibleToastState extends State<DismissibleToast>
-    with SingleTickerProviderStateMixin {
+class _DismissibleToastState extends State<DismissibleToast> with SingleTickerProviderStateMixin {
   double _dragOffset = 0;
   late final AnimationController _returnController;
   late Animation<double> _returnAnimation;
@@ -76,9 +75,10 @@ class _DismissibleToastState extends State<DismissibleToast>
     } else {
       // Spring back.
       final startOffset = _dragOffset;
-      _returnAnimation = Tween<double>(begin: startOffset, end: 0).animate(
-        CurvedAnimation(parent: _returnController, curve: Curves.easeOutCubic),
-      );
+      _returnAnimation = Tween<double>(
+        begin: startOffset,
+        end: 0,
+      ).animate(CurvedAnimation(parent: _returnController, curve: Curves.easeOutCubic));
       _returnController.forward(from: 0).then((_) {
         if (mounted) setState(() => _dragOffset = 0);
       });
@@ -92,10 +92,7 @@ class _DismissibleToastState extends State<DismissibleToast>
   Widget build(BuildContext context) {
     if (!widget.enabled) return widget.child;
 
-    final opacity = (1.0 - (_dragOffset.abs() / _maxDragExtent) * 0.6).clamp(
-      0.0,
-      1.0,
-    );
+    final opacity = (1.0 - (_dragOffset.abs() / _maxDragExtent) * 0.6).clamp(0.0, 1.0);
 
     return GestureDetector(
       onVerticalDragUpdate: _onPanUpdate,

@@ -11,16 +11,13 @@ import 'toast_message_widget.dart';
 import 'toast_progress_widget.dart';
 
 /// Custom builder for message toasts.
-typedef ToastMessageBuilder =
-    Widget Function(BuildContext context, MessageToastItem item);
+typedef ToastMessageBuilder = Widget Function(BuildContext context, MessageToastItem item);
 
 /// Custom builder for loading toasts.
-typedef ToastLoadingBuilder =
-    Widget Function(BuildContext context, LoadingToastItem item);
+typedef ToastLoadingBuilder = Widget Function(BuildContext context, LoadingToastItem item);
 
 /// Custom builder for progress toasts.
-typedef ToastProgressBuilder =
-    Widget Function(BuildContext context, ProgressToastItem item);
+typedef ToastProgressBuilder = Widget Function(BuildContext context, ProgressToastItem item);
 
 /// The full-screen overlay that renders all active toasts.
 ///
@@ -129,9 +126,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
     }
 
     // Check if we have any loading / progress toast for barrier.
-    final hasBarrier = items.any(
-      (t) => t is LoadingToastItem || t is ProgressToastItem,
-    );
+    final hasBarrier = items.any((t) => t is LoadingToastItem || t is ProgressToastItem);
 
     return Stack(
       children: [
@@ -162,9 +157,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
             child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (final item in centerItems) _buildToastEntry(item),
-                ],
+                children: [for (final item in centerItems) _buildToastEntry(item)],
               ),
             ),
           ),
@@ -180,8 +173,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (final item in bottomMessages.reversed)
-                    _buildToastEntry(item),
+                  for (final item in bottomMessages.reversed) _buildToastEntry(item),
                   SizedBox(height: _theme.spacing),
                 ],
               ),
@@ -241,10 +233,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
 
   Widget _buildToastEntry(ToastItem item) {
     // Get or create animation key.
-    _animKeys.putIfAbsent(
-      item.id,
-      () => GlobalKey<ToastAnimationWrapperState>(),
-    );
+    _animKeys.putIfAbsent(item.id, () => GlobalKey<ToastAnimationWrapperState>());
     final animKey = _animKeys[item.id]!;
 
     Widget content = _buildToastContent(item);
@@ -269,10 +258,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
       );
 
       // Message ignoring.
-      content = IgnorePointer(
-        ignoring: _theme.messageTheme.ignorePointer,
-        child: content,
-      );
+      content = IgnorePointer(ignoring: _theme.messageTheme.ignorePointer, child: content);
     }
 
     // Spacing between stacked items.
@@ -285,8 +271,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
       key: animKey,
       position: item.position,
       duration: _theme.animationDuration,
-      reverseDuration:
-          _theme.reverseAnimationDuration ?? _theme.animationDuration,
+      reverseDuration: _theme.reverseAnimationDuration ?? _theme.animationDuration,
       curve: _theme.animationCurve,
       reverseCurve: _theme.reverseAnimationCurve,
       onDismissed: () {
