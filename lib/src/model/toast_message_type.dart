@@ -1,7 +1,7 @@
 /// Message type for message toasts.
 ///
 /// message toast 的消息类型。
-enum MessageType {
+enum ToastMessageType {
   /// Info.
   ///
   /// 信息（默认）。

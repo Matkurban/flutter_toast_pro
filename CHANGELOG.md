@@ -1,3 +1,7 @@
+## 3.0.2
+
+-- MessageType --> ToastMessageType
+
 ## 3.0.1
 
 ### 🐛 Bug Fixes

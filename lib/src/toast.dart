@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model/message_type.dart';
+import 'model/toast_message_type.dart';
 import 'model/toast_action.dart';
 import 'model/toast_item.dart';
 import 'model/toast_position.dart';
@@ -42,7 +42,7 @@ sealed class FlutterToastPro {
   /// Show a message toast.
   static Future<void> show(
     String message, {
-    MessageType type = MessageType.info,
+    ToastMessageType type = ToastMessageType.info,
     IconData? icon,
     Duration? duration,
     ToastPosition? position,
@@ -75,7 +75,7 @@ sealed class FlutterToastPro {
   }) {
     return show(
       message,
-      type: MessageType.info,
+      type: ToastMessageType.info,
       icon: icon,
       duration: duration,
       position: position,
@@ -95,7 +95,7 @@ sealed class FlutterToastPro {
   }) {
     return show(
       message,
-      type: MessageType.success,
+      type: ToastMessageType.success,
       icon: icon,
       duration: duration,
       position: position,
@@ -115,7 +115,7 @@ sealed class FlutterToastPro {
   }) {
     return show(
       message,
-      type: MessageType.warning,
+      type: ToastMessageType.warning,
       icon: icon,
       duration: duration,
       position: position,
@@ -135,7 +135,7 @@ sealed class FlutterToastPro {
   }) {
     return show(
       message,
-      type: MessageType.error,
+      type: ToastMessageType.error,
       icon: icon,
       duration: duration,
       position: position,
@@ -156,9 +156,7 @@ sealed class FlutterToastPro {
     ToastPosition position = ToastPosition.center,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
-    return _m.show(
-      LoadingToastItem(message: message, position: position, extra: extra),
-    );
+    return _m.show(LoadingToastItem(message: message, position: position, extra: extra));
   }
 
   /// Dismiss the current loading indicator.
@@ -183,12 +181,7 @@ sealed class FlutterToastPro {
       _m.updateProgress(progress, message: message);
     } else {
       _m.show(
-        ProgressToastItem(
-          progress: progress,
-          message: message,
-          position: position,
-          extra: extra,
-        ),
+        ProgressToastItem(progress: progress, message: message, position: position, extra: extra),
       );
     }
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/message_type.dart';
+import '../model/toast_message_type.dart';
 import '../model/toast_action.dart';
 import '../model/toast_theme.dart';
 
@@ -21,29 +21,29 @@ class DefaultMessageWidget extends StatelessWidget {
   });
 
   final String message;
-  final MessageType type;
+  final ToastMessageType type;
   final MessageToastTheme theme;
   final bool enableGlass; // kept for API compat; does not enable backdrop blur
   final IconData? icon;
   final ToastAction? action;
 
-  /// Returns the semantic color for the given [MessageType].
-  Color _colorFor(MessageType type, ColorScheme cs) {
+  /// Returns the semantic color for the given [ToastMessageType].
+  Color _colorFor(ToastMessageType type, ColorScheme cs) {
     return switch (type) {
-      MessageType.info => theme.infoColor ?? cs.primary,
-      MessageType.success => theme.successColor ?? const Color(0xFF16A34A),
-      MessageType.warning => theme.warningColor ?? const Color(0xFFF59E0B),
-      MessageType.error => theme.errorColor ?? cs.error,
+      ToastMessageType.info => theme.infoColor ?? cs.primary,
+      ToastMessageType.success => theme.successColor ?? const Color(0xFF16A34A),
+      ToastMessageType.warning => theme.warningColor ?? const Color(0xFFF59E0B),
+      ToastMessageType.error => theme.errorColor ?? cs.error,
     };
   }
 
-  /// Returns the default icon for the given [MessageType].
-  IconData _defaultIconFor(MessageType type) {
+  /// Returns the default icon for the given [ToastMessageType].
+  IconData _defaultIconFor(ToastMessageType type) {
     return switch (type) {
-      MessageType.info => Icons.info_outline_rounded,
-      MessageType.success => Icons.check_circle_outline_rounded,
-      MessageType.warning => Icons.warning_amber_rounded,
-      MessageType.error => Icons.error_outline_rounded,
+      ToastMessageType.info => Icons.info_outline_rounded,
+      ToastMessageType.success => Icons.check_circle_outline_rounded,
+      ToastMessageType.warning => Icons.warning_amber_rounded,
+      ToastMessageType.error => Icons.error_outline_rounded,
     };
   }
 
@@ -74,10 +74,7 @@ class DefaultMessageWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: borderRadius,
-        border: Border.all(
-          color: color.withValues(alpha: isDark ? 0.15 : 0.12),
-          width: 0.5,
-        ),
+        border: Border.all(color: color.withValues(alpha: isDark ? 0.15 : 0.12), width: 0.5),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
@@ -94,9 +91,7 @@ class DefaultMessageWidget extends StatelessWidget {
             Icon(icon ?? _defaultIconFor(type), color: color, size: 20),
             const SizedBox(width: 10),
           ],
-          Flexible(
-            child: Text(message, style: resolvedTextStyle, softWrap: true),
-          ),
+          Flexible(child: Text(message, style: resolvedTextStyle, softWrap: true)),
           if (action != null) ...[
             const SizedBox(width: 12),
             GestureDetector(

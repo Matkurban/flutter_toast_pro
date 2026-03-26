@@ -6,7 +6,7 @@ export 'src/toast_wrapper.dart' show ToastScope;
 export 'src/toast_manager.dart';
 
 // Models
-export 'src/model/message_type.dart';
+export 'src/model/toast_message_type.dart';
 export 'src/model/toast_position.dart';
 export 'src/model/toast_item.dart';
 export 'src/model/toast_action.dart';

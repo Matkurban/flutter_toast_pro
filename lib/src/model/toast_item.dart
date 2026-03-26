@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'message_type.dart';
+import 'toast_message_type.dart';
 import 'toast_action.dart';
 import 'toast_position.dart';
 
@@ -13,14 +13,10 @@ String _generateId() => 'toast_${_nextId++}';
 
 /// Base class for all toast items managed by [ToastManager].
 sealed class ToastItem {
-  ToastItem({
-    String? id,
-    required this.position,
-    this.duration,
-    DateTime? createdAt,
-  }) : id = id ?? _generateId(),
-       createdAt = createdAt ?? DateTime.now(),
-       completer = Completer<void>();
+  ToastItem({String? id, required this.position, this.duration, DateTime? createdAt})
+    : id = id ?? _generateId(),
+      createdAt = createdAt ?? DateTime.now(),
+      completer = Completer<void>();
 
   /// Unique identifier.
   final String id;
@@ -43,7 +39,7 @@ class MessageToastItem extends ToastItem {
   MessageToastItem({
     super.id,
     required this.message,
-    this.type = MessageType.info,
+    this.type = ToastMessageType.info,
     this.icon,
     this.action,
     super.position = ToastPosition.top,
@@ -56,7 +52,7 @@ class MessageToastItem extends ToastItem {
   final String message;
 
   /// Severity type which decides the color scheme.
-  final MessageType type;
+  final ToastMessageType type;
 
   /// Optional leading icon (uses default per-type icon when null).
   final IconData? icon;
