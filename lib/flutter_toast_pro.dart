@@ -2,7 +2,7 @@ library;
 
 // Core API
 export 'src/toast.dart';
-export 'src/toast_wrapper.dart' show ToastScope;
+export 'src/toast_scope.dart' show ToastScope;
 export 'src/toast_manager.dart';
 
 // Models

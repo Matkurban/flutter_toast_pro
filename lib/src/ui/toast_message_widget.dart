@@ -28,12 +28,21 @@ class DefaultMessageWidget extends StatelessWidget {
   final ToastAction? action;
 
   /// Returns the semantic color for the given [ToastMessageType].
-  Color _colorFor(ToastMessageType type, ColorScheme cs) {
+  Color _foregroundColor(ToastMessageType type, ColorScheme colorScheme) {
     return switch (type) {
-      ToastMessageType.info => theme.infoColor ?? cs.primary,
-      ToastMessageType.success => theme.successColor ?? const Color(0xFF16A34A),
-      ToastMessageType.warning => theme.warningColor ?? const Color(0xFFF59E0B),
-      ToastMessageType.error => theme.errorColor ?? cs.error,
+      ToastMessageType.info => theme.infoForegroundColor ?? colorScheme.primary,
+      ToastMessageType.success => theme.successForegroundColor ?? const Color(0xFF16A34A),
+      ToastMessageType.warning => theme.warningForegroundColor ?? const Color(0xFFF59E0B),
+      ToastMessageType.error => theme.errorForegroundColor ?? colorScheme.error,
+    };
+  }
+
+  Color _backgroundColor(ToastMessageType type, ColorScheme colorScheme) {
+    return switch (type) {
+      ToastMessageType.info => theme.infoBackgroundColor ?? colorScheme.primary,
+      ToastMessageType.success => theme.successBackgroundColor ?? const Color(0xFF16A34A),
+      ToastMessageType.warning => theme.warningBackgroundColor ?? const Color(0xFFF59E0B),
+      ToastMessageType.error => theme.errorBackgroundColor ?? colorScheme.error,
     };
   }
 
@@ -49,35 +58,18 @@ class DefaultMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final color = _colorFor(type, cs);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    // Material 3 tonal card: opaque tinted surface background.
-    final bgColor = Color.alphaBlend(
-      color.withValues(alpha: isDark ? 0.18 : 0.10),
-      isDark ? cs.surfaceContainer : Colors.white,
-    );
-
-    final textColor = isDark ? Colors.white.withValues(alpha: 0.92) : color;
-
-    final resolvedTextStyle = (theme.textStyle ?? const TextStyle()).copyWith(
-      color: textColor,
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-    );
-
-    final borderRadius = theme.borderRadius.resolve(Directionality.of(context));
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final Color foregroundColor = _foregroundColor(type, colorScheme);
+    final Color backgroundColor = _backgroundColor(type, colorScheme);
 
     return Container(
       margin: theme.margin,
       decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: borderRadius,
-        border: Border.all(color: color.withValues(alpha: isDark ? 0.15 : 0.12), width: 0.5),
+        color: backgroundColor,
+        borderRadius: theme.borderRadius,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
+            color: backgroundColor.withValues(alpha: 0.08),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -88,10 +80,20 @@ class DefaultMessageWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (theme.showIcon) ...[
-            Icon(icon ?? _defaultIconFor(type), color: color, size: 20),
+            Icon(icon ?? _defaultIconFor(type), color: foregroundColor, size: 20),
             const SizedBox(width: 10),
           ],
-          Flexible(child: Text(message, style: resolvedTextStyle, softWrap: true)),
+          Flexible(
+            child: Text(
+              message,
+              style: (theme.textStyle ?? const TextStyle()).copyWith(
+                color: foregroundColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              softWrap: true,
+            ),
+          ),
           if (action != null) ...[
             const SizedBox(width: 12),
             GestureDetector(
@@ -99,9 +101,9 @@ class DefaultMessageWidget extends StatelessWidget {
               child: Text(
                 action!.label,
                 style: (theme.actionTextStyle ?? const TextStyle()).copyWith(
-                  color: color,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
+                  color: foregroundColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

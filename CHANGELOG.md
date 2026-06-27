@@ -1,3 +1,7 @@
+## 3.1.0
+
+- update default color
+
 ## 3.0.2
 
 -- MessageType --> ToastMessageType

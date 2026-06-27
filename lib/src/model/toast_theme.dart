@@ -91,19 +91,22 @@ class ToastThemeData {
 @immutable
 class MessageToastTheme {
   const MessageToastTheme({
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
     this.margin = const EdgeInsets.symmetric(horizontal: 16),
-    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
-    this.blurSigma = 20.0,
+    this.borderRadius = const BorderRadius.all(Radius.circular(8)),
     this.showIcon = true,
     this.elevation = 0,
     this.textStyle,
     this.actionTextStyle,
-    this.infoColor,
-    this.successColor,
-    this.warningColor,
-    this.errorColor,
-    this.overlayColor = Colors.transparent,
+    this.infoForegroundColor = const Color.fromRGBO(0, 122, 255, 1.0),
+    this.infoBackgroundColor = const Color.fromRGBO(239, 246, 255, 1.0),
+    this.successForegroundColor = const Color.fromRGBO(52, 199, 89, 1.0),
+    this.successBackgroundColor = const Color.fromRGBO(240, 253, 244, 1.0),
+    this.warningForegroundColor = const Color.fromRGBO(255, 149, 0, 1.0),
+    this.warningBackgroundColor = const Color.fromRGBO(254, 243, 199, 1.0),
+    this.errorForegroundColor = const Color.fromRGBO(255, 59, 48, 1.0),
+    this.errorBackgroundColor = const Color.fromRGBO(254, 242, 242, 1.0),
+    this.barrierColor = Colors.transparent,
     this.ignorePointer = true,
     this.barrierDismissible = false,
     this.tapToDismiss = true,
@@ -118,9 +121,6 @@ class MessageToastTheme {
   /// Border radius of the toast card.
   final BorderRadiusGeometry borderRadius;
 
-  /// Sigma value for glassmorphism backdrop blur.
-  final double blurSigma;
-
   /// Whether to show the type-specific icon.
   final bool showIcon;
 
@@ -134,19 +134,27 @@ class MessageToastTheme {
   final TextStyle? actionTextStyle;
 
   /// Override color for info toasts.
-  final Color? infoColor;
+  final Color? infoForegroundColor;
+
+  final Color? infoBackgroundColor;
 
   /// Override color for success toasts.
-  final Color? successColor;
+  final Color? successForegroundColor;
+
+  final Color? successBackgroundColor;
 
   /// Override color for warning toasts.
-  final Color? warningColor;
+  final Color? warningForegroundColor;
+
+  final Color? warningBackgroundColor;
 
   /// Override color for error toasts.
-  final Color? errorColor;
+  final Color? errorForegroundColor;
+
+  final Color? errorBackgroundColor;
 
   /// Overlay background color (barrier).
-  final Color overlayColor;
+  final Color barrierColor;
 
   /// Whether the overlay ignores pointer events.
   final bool ignorePointer;
@@ -156,44 +164,6 @@ class MessageToastTheme {
 
   /// Whether tapping the toast content dismisses it.
   final bool tapToDismiss;
-
-  MessageToastTheme copyWith({
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
-    BorderRadiusGeometry? borderRadius,
-    double? blurSigma,
-    bool? showIcon,
-    double? elevation,
-    TextStyle? textStyle,
-    TextStyle? actionTextStyle,
-    Color? infoColor,
-    Color? successColor,
-    Color? warningColor,
-    Color? errorColor,
-    Color? overlayColor,
-    bool? ignorePointer,
-    bool? barrierDismissible,
-    bool? tapToDismiss,
-  }) {
-    return MessageToastTheme(
-      padding: padding ?? this.padding,
-      margin: margin ?? this.margin,
-      borderRadius: borderRadius ?? this.borderRadius,
-      blurSigma: blurSigma ?? this.blurSigma,
-      showIcon: showIcon ?? this.showIcon,
-      elevation: elevation ?? this.elevation,
-      textStyle: textStyle ?? this.textStyle,
-      actionTextStyle: actionTextStyle ?? this.actionTextStyle,
-      infoColor: infoColor ?? this.infoColor,
-      successColor: successColor ?? this.successColor,
-      warningColor: warningColor ?? this.warningColor,
-      errorColor: errorColor ?? this.errorColor,
-      overlayColor: overlayColor ?? this.overlayColor,
-      ignorePointer: ignorePointer ?? this.ignorePointer,
-      barrierDismissible: barrierDismissible ?? this.barrierDismissible,
-      tapToDismiss: tapToDismiss ?? this.tapToDismiss,
-    );
-  }
 }
 
 /// Theme for loading toasts.

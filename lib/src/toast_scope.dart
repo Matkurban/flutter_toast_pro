@@ -23,15 +23,16 @@ import 'ui/toast_overlay.dart';
 class ToastScope extends StatefulWidget {
   const ToastScope({
     super.key,
-    required this.child,
+    this.child,
     this.theme = const ToastThemeData(),
     this.messageBuilder,
     this.loadingBuilder,
     this.progressBuilder,
+    this.initialEntries = const <OverlayEntry>[],
   });
 
   /// Your app widget.
-  final Widget child;
+  final Widget? child;
 
   /// Theme configuration for all toast types.
   final ToastThemeData theme;
@@ -44,6 +45,8 @@ class ToastScope extends StatefulWidget {
 
   /// Custom builder for progress toasts.
   final ToastProgressBuilder? progressBuilder;
+
+  final List<OverlayEntry> initialEntries;
 
   @override
   State<ToastScope> createState() => _ToastScopeState();
@@ -76,35 +79,29 @@ class _ToastScopeState extends State<ToastScope> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Stack(
-        children: [
-          widget.child,
-          // The overlay sits above the entire app and rebuilds as
-          // ToastManager notifies.
-          Overlay(
-            initialEntries: [
-              OverlayEntry(
-                builder: (context) => ListenableBuilder(
-                  listenable: _manager,
-                  builder: (context, _) {
-                    if (_manager.items.isEmpty) {
-                      return const SizedBox.shrink();
-                    }
-                    return ToastOverlay(
-                      manager: _manager,
-                      messageBuilder: widget.messageBuilder,
-                      loadingBuilder: widget.loadingBuilder,
-                      progressBuilder: widget.progressBuilder,
-                    );
-                  },
+    return Overlay(
+      initialEntries: [
+        if (widget.child != null) OverlayEntry(builder: (context) => widget.child!),
+        OverlayEntry(
+          builder: (context) => ListenableBuilder(
+            listenable: _manager,
+            builder: (context, _) {
+              if (_manager.items.isEmpty) {
+                return const SizedBox.shrink();
+              }
+              return Material(
+                type: .transparency,
+                child: ToastOverlay(
+                  manager: _manager,
+                  messageBuilder: widget.messageBuilder,
+                  loadingBuilder: widget.loadingBuilder,
+                  progressBuilder: widget.progressBuilder,
                 ),
-              ),
-            ],
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

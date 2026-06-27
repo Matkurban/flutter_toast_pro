@@ -11,24 +11,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ToastScope(
-      theme: const ToastThemeData(
-        position: ToastPosition.top,
-        maxVisibleToasts: 5,
-        enableGlassmorphism: true,
-        enableSwipeToDismiss: true,
-        messageTheme: MessageToastTheme(
-          margin: EdgeInsets.symmetric(horizontal: 16),
-        ),
-        loadingTheme: LoadingToastTheme(overlayColor: Color(0x33000000)),
-      ),
-      child: MaterialApp(
-        title: 'Flutter Toast Pro',
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.light,
-        home: const MyHomePage(),
-      ),
+    return MaterialApp(
+      title: 'Flutter Toast Pro',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.light,
+      home: const MyHomePage(),
+      builder: (context, child) {
+        return ToastScope(
+          theme: const ToastThemeData(
+            position: ToastPosition.top,
+            maxVisibleToasts: 5,
+            enableGlassmorphism: true,
+            enableSwipeToDismiss: true,
+            messageTheme: MessageToastTheme(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+            ),
+            loadingTheme: LoadingToastTheme(overlayColor: Color(0x33000000)),
+          ),
+          child: child,
+        );
+      },
     );
   }
 }
