@@ -1,5 +1,10 @@
 ## 3.1.0
 
+- add `initialEntries` parameter
+- add `overlayKey` parameter
+
+## 3.1.0
+
 - update default color
 
 ## 3.0.2

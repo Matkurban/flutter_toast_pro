@@ -23,6 +23,7 @@ import 'ui/toast_overlay.dart';
 class ToastScope extends StatefulWidget {
   const ToastScope({
     super.key,
+    this.overlayKey,
     this.child,
     this.theme = const ToastThemeData(),
     this.messageBuilder,
@@ -30,6 +31,9 @@ class ToastScope extends StatefulWidget {
     this.progressBuilder,
     this.initialEntries = const <OverlayEntry>[],
   });
+
+  /// [Overlay] key
+  final Key? overlayKey;
 
   /// Your app widget.
   final Widget? child;
@@ -80,8 +84,10 @@ class _ToastScopeState extends State<ToastScope> {
   @override
   Widget build(BuildContext context) {
     return Overlay(
+      key: widget.overlayKey,
       initialEntries: [
         if (widget.child != null) OverlayEntry(builder: (context) => widget.child!),
+        ...widget.initialEntries,
         OverlayEntry(
           builder: (context) => ListenableBuilder(
             listenable: _manager,
