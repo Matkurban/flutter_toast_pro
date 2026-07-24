@@ -57,7 +57,7 @@ class ToastScope extends StatefulWidget {
 }
 
 class _ToastScopeState extends State<ToastScope> {
-  late final ToastManager _manager;
+  late ToastManager _manager;
 
   @override
   void initState() {
@@ -75,36 +75,48 @@ class _ToastScopeState extends State<ToastScope> {
   }
 
   @override
+  void reassemble() {
+    super.reassemble();
+    FlutterToastPro.attach(_manager);
+  }
+
+  @override
   void dispose() {
-    FlutterToastPro.detach();
+    FlutterToastPro.detach(_manager);
     _manager.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Overlay(
-      key: widget.overlayKey,
-      initialEntries: [
-        if (widget.child != null) OverlayEntry(builder: (context) => widget.child!),
-        ...widget.initialEntries,
-        OverlayEntry(
-          builder: (context) => ListenableBuilder(
-            listenable: _manager,
-            builder: (context, _) {
-              if (_manager.items.isEmpty) {
-                return const SizedBox.shrink();
-              }
-              return Material(
-                type: .transparency,
-                child: ToastOverlay(
-                  manager: _manager,
-                  messageBuilder: widget.messageBuilder,
-                  loadingBuilder: widget.loadingBuilder,
-                  progressBuilder: widget.progressBuilder,
+    return Stack(
+      children: [
+        if (widget.child != null) widget.child!,
+        Positioned.fill(
+          child: Overlay(
+            key: widget.overlayKey,
+            initialEntries: [
+              ...widget.initialEntries,
+              OverlayEntry(
+                builder: (context) => ListenableBuilder(
+                  listenable: _manager,
+                  builder: (context, _) {
+                    if (_manager.items.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return Material(
+                      type: .transparency,
+                      child: ToastOverlay(
+                        manager: _manager,
+                        messageBuilder: widget.messageBuilder,
+                        loadingBuilder: widget.loadingBuilder,
+                        progressBuilder: widget.progressBuilder,
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ],
           ),
         ),
       ],

@@ -1,3 +1,11 @@
+## 3.1.2
+
+- fix bugs
+
+## 3.1.1
+
+- fix bugs
+
 ## 3.1.0
 
 - add `initialEntries` parameter

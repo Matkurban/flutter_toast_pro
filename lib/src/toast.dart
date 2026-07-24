@@ -18,22 +18,26 @@ import 'toast_manager.dart';
 sealed class FlutterToastPro {
   /// The global [ToastManager] attached by [ToastScope].
   /// Throws if [ToastScope] has not been mounted yet.
-  static ToastManager? _manager;
+  static ToastManager? _toastManager;
 
-  static ToastManager get _m {
+  static ToastManager get _manager {
     assert(
-      _manager != null,
+      _toastManager != null,
       'Toast was used before ToastScope was mounted. '
       'Wrap your app with ToastScope.',
     );
-    return _manager!;
+    return _toastManager!;
   }
 
   /// Called by [ToastScope] to attach the manager.
-  static void attach(ToastManager manager) => _manager = manager;
+  static void attach(ToastManager manager) => _toastManager = manager;
 
   /// Called by [ToastScope] to detach the manager.
-  static void detach() => _manager = null;
+  static void detach([ToastManager? manager]) {
+    if (manager == null || _toastManager == manager) {
+      _toastManager = null;
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // Message toasts
@@ -50,13 +54,13 @@ sealed class FlutterToastPro {
     bool swipeToDismiss = true,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
-    return _m.show(
+    return _manager.show(
       MessageToastItem(
         message: message,
         type: type,
         icon: icon,
         duration: duration ?? const Duration(seconds: 3),
-        position: position ?? _m.theme.position,
+        position: position ?? _manager.theme.position,
         action: action,
         swipeToDismiss: swipeToDismiss,
         extra: extra,
@@ -156,11 +160,11 @@ sealed class FlutterToastPro {
     ToastPosition position = ToastPosition.center,
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
-    return _m.show(LoadingToastItem(message: message, position: position, extra: extra));
+    return _manager.show(LoadingToastItem(message: message, position: position, extra: extra));
   }
 
   /// Dismiss the current loading indicator.
-  static void hideLoading() => _m.dismissLoading();
+  static void hideLoading() => _manager.dismissLoading();
 
   // ---------------------------------------------------------------------------
   // Progress toast
@@ -176,26 +180,26 @@ sealed class FlutterToastPro {
     Map<String, dynamic> extra = const <String, dynamic>{},
   }) {
     // If a progress toast already exists, update in-place.
-    final existing = _m.items.whereType<ProgressToastItem>().firstOrNull;
+    final existing = _manager.items.whereType<ProgressToastItem>().firstOrNull;
     if (existing != null) {
-      _m.updateProgress(progress, message: message);
+      _manager.updateProgress(progress, message: message);
     } else {
-      _m.show(
+      _manager.show(
         ProgressToastItem(progress: progress, message: message, position: position, extra: extra),
       );
     }
   }
 
   /// Dismiss the current progress indicator.
-  static void hideProgress() => _m.dismissProgress();
+  static void hideProgress() => _manager.dismissProgress();
 
   // ---------------------------------------------------------------------------
   // Generic dismiss
   // ---------------------------------------------------------------------------
 
   /// Dismiss a specific toast by [id].
-  static void dismiss(String id) => _m.dismiss(id);
+  static void dismiss(String id) => _manager.dismiss(id);
 
   /// Dismiss all toasts.
-  static void dismissAll() => _m.dismissAll();
+  static void dismissAll() => _manager.dismissAll();
 }
