@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../model/toast_item.dart';
@@ -26,15 +27,23 @@ class ToastOverlay extends StatefulWidget {
   const ToastOverlay({
     super.key,
     required this.manager,
+    this.onIdle,
     this.messageBuilder,
     this.loadingBuilder,
     this.progressBuilder,
   });
 
   final ToastManager manager;
+  final VoidCallback? onIdle;
   final ToastMessageBuilder? messageBuilder;
   final ToastLoadingBuilder? loadingBuilder;
   final ToastProgressBuilder? progressBuilder;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<ToastManager>('manager', manager));
+  }
 
   @override
   State<ToastOverlay> createState() => _ToastOverlayState();
@@ -55,13 +64,30 @@ class _ToastOverlayState extends State<ToastOverlay> {
   @override
   void initState() {
     super.initState();
+    _previousIds = widget.manager.items.map((t) => t.id).toList();
     widget.manager.addListener(_onManagerChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant ToastOverlay oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.manager != widget.manager) {
+      oldWidget.manager.removeListener(_onManagerChanged);
+      widget.manager.addListener(_onManagerChanged);
+      _previousIds = widget.manager.items.map((t) => t.id).toList();
+    }
   }
 
   @override
   void dispose() {
     widget.manager.removeListener(_onManagerChanged);
     super.dispose();
+  }
+
+  void _checkIdle() {
+    if (widget.manager.items.isEmpty && _animKeys.isEmpty && _dismissing.isEmpty) {
+      widget.onIdle?.call();
+    }
   }
 
   void _onManagerChanged() {
@@ -77,6 +103,7 @@ class _ToastOverlayState extends State<ToastOverlay> {
     _previousIds = currentIds.toList();
 
     setState(() {});
+    _checkIdle();
   }
 
   void _animateOut(String id) {
@@ -86,10 +113,14 @@ class _ToastOverlayState extends State<ToastOverlay> {
       key!.currentState!.animateOut().then((_) {
         _dismissing.remove(id);
         _animKeys.remove(id);
-        if (mounted) setState(() {});
+        if (mounted) {
+          setState(() {});
+          _checkIdle();
+        }
       });
     } else {
       _animKeys.remove(id);
+      _checkIdle();
     }
   }
 

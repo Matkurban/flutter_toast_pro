@@ -1,3 +1,9 @@
+## 3.1.3
+
+- **Widget Inspector Optimization**: Dynamically mount/unmount `Overlay` in `ToastScope` so that when no toasts are active, the widget tree remains clean without extra `Overlay` nodes interfering with DevTools inspection.
+- **Singleton ToastManager**: Refactored `ToastManager` to a singleton instance (`ToastManager.instance`), preventing `null` pointer/assertion exceptions during Hot Reload, Hot Restart, and DevTools inspection cycles.
+- **Enhanced DevTools Diagnostics**: Added `debugFillProperties` implementations for `ToastScope` and `ToastOverlay` to support rich diagnostic inspector views in Flutter DevTools.
+
 ## 3.1.2
 
 - fix bugs

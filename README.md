@@ -20,7 +20,7 @@
 
 ```yaml
 dependencies:
-  flutter_toast_pro: ^3.1.2
+  flutter_toast_pro: ^3.1.3
 ```
 
 ```bash

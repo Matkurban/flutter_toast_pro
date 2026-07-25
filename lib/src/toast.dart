@@ -16,27 +16,17 @@ import 'toast_manager.dart';
 /// await FlutterToastPro.loading(message: 'Please wait…');
 /// ```
 sealed class FlutterToastPro {
-  /// The global [ToastManager] attached by [ToastScope].
-  /// Throws if [ToastScope] has not been mounted yet.
-  static ToastManager? _toastManager;
+  /// The global [ToastManager] singleton instance.
+  static ToastManager get _manager => ToastManager.instance;
 
-  static ToastManager get _manager {
-    assert(
-      _toastManager != null,
-      'Toast was used before ToastScope was mounted. '
-      'Wrap your app with ToastScope.',
-    );
-    return _toastManager!;
+  /// Called by [ToastScope] to attach or update the manager theme.
+  static void attach(ToastManager manager) {
+    ToastManager.instance.theme = manager.theme;
   }
-
-  /// Called by [ToastScope] to attach the manager.
-  static void attach(ToastManager manager) => _toastManager = manager;
 
   /// Called by [ToastScope] to detach the manager.
   static void detach([ToastManager? manager]) {
-    if (manager == null || _toastManager == manager) {
-      _toastManager = null;
-    }
+    // No-op for singleton to ensure ToastManager is never null during DevTools inspection or hot reloads.
   }
 
   // ---------------------------------------------------------------------------

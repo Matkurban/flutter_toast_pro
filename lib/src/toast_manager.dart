@@ -9,10 +9,19 @@ import 'model/toast_theme.dart';
 ///
 /// This is a [ChangeNotifier] that the UI layer listens to for updates.
 class ToastManager extends ChangeNotifier {
-  ToastManager({this.theme = const ToastThemeData()});
+  ToastManager._internal();
+
+  /// Static singleton instance.
+  static final ToastManager instance = ToastManager._internal();
+
+  /// Factory constructor returning the singleton instance.
+  factory ToastManager({ToastThemeData theme = const ToastThemeData()}) {
+    instance.theme = theme;
+    return instance;
+  }
 
   /// Theme configuration.
-  ToastThemeData theme;
+  ToastThemeData theme = const ToastThemeData();
 
   /// Currently active toast items (newest last).
   final List<ToastItem> _items = [];
@@ -149,8 +158,8 @@ class ToastManager extends ChangeNotifier {
     _timers.remove(id)?.cancel();
   }
 
-  @override
-  void dispose() {
+  /// Clear all active items and cancel timers without disposing the singleton.
+  void clear() {
     for (final timer in _timers.values) {
       timer.cancel();
     }
@@ -159,6 +168,11 @@ class ToastManager extends ChangeNotifier {
       if (!item.completer.isCompleted) item.completer.complete();
     }
     _items.clear();
+  }
+
+  @override
+  void dispose() {
+    clear();
     super.dispose();
   }
 }

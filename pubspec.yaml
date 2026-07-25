@@ -1,6 +1,6 @@
 name: flutter_toast_pro
 description: "Overlay-based toast/loading/progress helper for Flutter apps."
-version: 3.1.2
+version: 3.1.3
 homepage: https://github.com/Matkurban/flutter_toast_pro
 repository: https://github.com/Matkurban/flutter_toast_pro
 topics: [ toast,message,loading,progress ]
