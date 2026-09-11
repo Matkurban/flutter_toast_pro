@@ -4,3 +4,6 @@ include: package:flutter_lints/flutter.yaml
 # https://dart.dev/guides/language/analysis-options
 formatter:
   page_width: 100
+analyzer:
+  exclude:
+    - build/**

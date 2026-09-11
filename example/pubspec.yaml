@@ -38,6 +38,9 @@ dependencies:
   flutter_toast_pro:
     path: ../
 
+  material_ui: any
+  cupertino_ui: any
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

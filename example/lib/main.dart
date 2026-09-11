@@ -1,5 +1,5 @@
 import 'package:example/app_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_toast_pro/flutter_toast_pro.dart';
 
 void main() {
@@ -13,8 +13,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Toast Pro',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        colorScheme: lightColorScheme,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: darkColorScheme,
+      ),
       themeMode: ThemeMode.light,
       home: const MyHomePage(),
       builder: (context, child) {

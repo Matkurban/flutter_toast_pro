@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_toast_pro/flutter_toast_pro.dart';
 import 'package:flutter_toast_pro/src/ui/toast_overlay.dart';
@@ -8,15 +8,9 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         builder: (context, child) {
-          return ToastScope(
-            child: child,
-          );
+          return ToastScope(child: child);
         },
-        home: const Scaffold(
-          body: Center(
-            child: Text('App Content'),
-          ),
-        ),
+        home: const Scaffold(body: Center(child: Text('App Content'))),
       ),
     );
 
@@ -35,13 +29,13 @@ void main() {
     expect(diagnostics, isNotNull);
   });
 
-  testWidgets('ToastScope mounts Overlay when toast is shown and unmounts on dismissal', (tester) async {
+  testWidgets('ToastScope mounts Overlay when toast is shown and unmounts on dismissal', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(
         builder: (context, child) {
-          return ToastScope(
-            child: child,
-          );
+          return ToastScope(child: child);
         },
         home: Scaffold(
           body: Center(
@@ -82,13 +76,9 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         builder: (context, child) {
-          return ToastScope(
-            child: child,
-          );
+          return ToastScope(child: child);
         },
-        home: const Scaffold(
-          body: Text('Home'),
-        ),
+        home: const Scaffold(body: Text('Home')),
       ),
     );
 
@@ -165,6 +155,3 @@ void main() {
     expect(find.byKey(const Key('custom_toast_container')), findsNothing);
   });
 }
-
-
-
