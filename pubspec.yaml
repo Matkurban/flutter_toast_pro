@@ -32,8 +32,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  material_ui: any
-  cupertino_ui: any
+  material_ui: ^1.2.0
+  cupertino_ui: ^1.0.2
 
 dev_dependencies:
   flutter_test:
