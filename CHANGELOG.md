@@ -1,3 +1,9 @@
+## 4.0.2
+
+* Ship AI agent skills (`flutter-toast-pro-setup`, `flutter-toast-pro-toasts`) for `dart run skills@ get`.
+* Rewrite the English README to match the current public API.
+* Add Chinese documentation in `README.zh-CN.md`.
+
 ## 4.0.1
 
 * update `material_ui` version to `1.3.0`

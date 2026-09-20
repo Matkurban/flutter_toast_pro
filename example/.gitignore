@@ -47,3 +47,8 @@ app.*.map.json
 /android/app/release
 
 pubspec.lock
+
+# Local agent skill installs (`dart run skills@ get`)
+.cursor/skills/
+.agents/
+.config/dart_skills/
