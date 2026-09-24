@@ -6,6 +6,10 @@ Overlay-based toast, loading, and progress helper for Flutter.
 
 Requires Flutter `>=3.44.0` and depends on `material_ui` and `cupertino_ui`.
 
+## Live demo
+
+[https://matkurban.github.io/flutter_toast_pro/](https://matkurban.github.io/flutter_toast_pro/)
+
 ## Features
 
 - Stackable message toasts with enter/exit animation

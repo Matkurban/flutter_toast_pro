@@ -6,6 +6,10 @@
 
 要求 Flutter `>=3.44.0`，依赖 `material_ui` 与 `cupertino_ui`。
 
+## 在线演示
+
+[https://matkurban.github.io/flutter_toast_pro/](https://matkurban.github.io/flutter_toast_pro/)
+
 ## 特性
 
 - 可堆叠的消息 Toast，带进出场动画

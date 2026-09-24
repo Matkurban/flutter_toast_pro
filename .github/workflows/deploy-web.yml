@@ -1,0 +1,50 @@
+name: Deploy web demo
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Package analyze
+        run: |
+          flutter pub get
+          flutter analyze
+      - name: Example analyze
+        working-directory: example
+        run: |
+          flutter pub get
+          flutter analyze
+      - name: Build web
+        working-directory: example
+        run: flutter build web --release --base-href /flutter_toast_pro/
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: example/build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

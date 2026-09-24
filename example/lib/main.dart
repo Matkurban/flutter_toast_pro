@@ -13,15 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Toast Pro',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: lightColorScheme,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: darkColorScheme,
-      ),
-      themeMode: ThemeMode.light,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
       home: const MyHomePage(),
       builder: (context, child) {
         return ToastScope(
