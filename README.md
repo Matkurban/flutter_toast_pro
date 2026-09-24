@@ -4,7 +4,7 @@ English | [中文](README.zh-CN.md)
 
 Overlay-based toast, loading, and progress helper for Flutter.
 
-Requires Flutter `>=3.44.0` and depends on `material_ui` and `cupertino_ui`.
+Requires Flutter `>=3.47.0` and depends on `material_ui` and `cupertino_ui`.
 
 ## Live demo
 
@@ -25,7 +25,7 @@ Requires Flutter `>=3.44.0` and depends on `material_ui` and `cupertino_ui`.
 
 ```yaml
 dependencies:
-  flutter_toast_pro: ^4.0.2
+  flutter_toast_pro: ^4.1.0
 ```
 
 ```bash
@@ -98,15 +98,15 @@ Call `FlutterToastPro` only after `ToastScope` is in the widget tree.
 
 ## Message API
 
-| Method | Returns | Description |
-|--------|---------|-------------|
+| Method                                                                                           | Returns        | Description                |
+| ------------------------------------------------------------------------------------------------ | -------------- | -------------------------- |
 | `FlutterToastPro.show(message, {type, icon, duration, position, action, swipeToDismiss, extra})` | `Future<void>` | Configurable message toast |
-| `FlutterToastPro.info(message, {icon, duration, position, action, extra})` | `Future<void>` | Info toast |
-| `FlutterToastPro.success(message, {icon, duration, position, action, extra})` | `Future<void>` | Success toast |
-| `FlutterToastPro.warning(message, {icon, duration, position, action, extra})` | `Future<void>` | Warning toast |
-| `FlutterToastPro.error(message, {icon, duration, position, action, extra})` | `Future<void>` | Error toast |
-| `FlutterToastPro.dismiss(id)` | `void` | Dismiss one toast by id |
-| `FlutterToastPro.dismissAll()` | `void` | Dismiss every toast |
+| `FlutterToastPro.info(message, {icon, duration, position, action, extra})`                       | `Future<void>` | Info toast                 |
+| `FlutterToastPro.success(message, {icon, duration, position, action, extra})`                    | `Future<void>` | Success toast              |
+| `FlutterToastPro.warning(message, {icon, duration, position, action, extra})`                    | `Future<void>` | Warning toast              |
+| `FlutterToastPro.error(message, {icon, duration, position, action, extra})`                      | `Future<void>` | Error toast                |
+| `FlutterToastPro.dismiss(id)`                                                                    | `void`         | Dismiss one toast by id    |
+| `FlutterToastPro.dismissAll()`                                                                   | `void`         | Dismiss every toast        |
 
 Message futures complete when that toast is dismissed (timer, swipe/tap when enabled, or `dismiss` / `dismissAll`).
 
@@ -114,27 +114,27 @@ Message futures complete when that toast is dismissed (timer, swipe/tap when ena
 
 ### Message parameters
 
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `message` | `String` | required | Display text |
-| `type` | `ToastMessageType` | `info` (`show` only) | `info` / `success` / `warning` / `error` |
-| `icon` | `IconData?` | per-type default | Leading icon |
-| `duration` | `Duration?` | 3 seconds | Auto-dismiss; omitted values become 3 seconds |
-| `position` | `ToastPosition?` | `ToastThemeData.position` (`top`) | `top` / `center` / `bottom` |
-| `action` | `ToastAction?` | `null` | Trailing button; does not dismiss by itself |
-| `swipeToDismiss` | `bool` | `true` (`show` only) | Combined with `ToastThemeData.enableSwipeToDismiss` |
-| `extra` | `Map<String, dynamic>` | `const {}` | Forwarded to a custom `messageBuilder` |
+| Parameter        | Type                   | Default                           | Description                                         |
+| ---------------- | ---------------------- | --------------------------------- | --------------------------------------------------- |
+| `message`        | `String`               | required                          | Display text                                        |
+| `type`           | `ToastMessageType`     | `info` (`show` only)              | `info` / `success` / `warning` / `error`            |
+| `icon`           | `IconData?`            | per-type default                  | Leading icon                                        |
+| `duration`       | `Duration?`            | 3 seconds                         | Auto-dismiss; omitted values become 3 seconds       |
+| `position`       | `ToastPosition?`       | `ToastThemeData.position` (`top`) | `top` / `center` / `bottom`                         |
+| `action`         | `ToastAction?`         | `null`                            | Trailing button; does not dismiss by itself         |
+| `swipeToDismiss` | `bool`                 | `true` (`show` only)              | Combined with `ToastThemeData.enableSwipeToDismiss` |
+| `extra`          | `Map<String, dynamic>` | `const {}`                        | Forwarded to a custom `messageBuilder`              |
 
 Swipe and tap-to-dismiss run only when `MessageToastTheme.ignorePointer` is `false` (the theme default is `true`).
 
 ## Loading and progress
 
-| Method | Returns | Description |
-|--------|---------|-------------|
-| `FlutterToastPro.loading({message, position, extra})` | `Future<void>` | Show a loading indicator (`position` defaults to `center`) |
-| `FlutterToastPro.hideLoading()` | `void` | Dismiss the current loading indicator |
-| `FlutterToastPro.progress(value, {message, position, extra})` | `void` | Show or update progress (`0.0`–`1.0`) |
-| `FlutterToastPro.hideProgress()` | `void` | Dismiss the current progress indicator |
+| Method                                                        | Returns        | Description                                                |
+| ------------------------------------------------------------- | -------------- | ---------------------------------------------------------- |
+| `FlutterToastPro.loading({message, position, extra})`         | `Future<void>` | Show a loading indicator (`position` defaults to `center`) |
+| `FlutterToastPro.hideLoading()`                               | `void`         | Dismiss the current loading indicator                      |
+| `FlutterToastPro.progress(value, {message, position, extra})` | `void`         | Show or update progress (`0.0`–`1.0`)                      |
+| `FlutterToastPro.hideProgress()`                              | `void`         | Dismiss the current progress indicator                     |
 
 Loading and progress are globally unique: showing another of the same type replaces the previous one.
 
@@ -238,10 +238,10 @@ dart run skills@ get
 
 Skills:
 
-| Skill | Use when |
-|-------|----------|
-| `flutter-toast-pro-setup` | Mounting `ToastScope`, theming, custom builders, `GlassContainer` |
-| `flutter-toast-pro-toasts` | Showing and dismissing messages, loading, and progress |
+| Skill                      | Use when                                                          |
+| -------------------------- | ----------------------------------------------------------------- |
+| `flutter-toast-pro-setup`  | Mounting `ToastScope`, theming, custom builders, `GlassContainer` |
+| `flutter-toast-pro-toasts` | Showing and dismissing messages, loading, and progress            |
 
 ## Migration
 
@@ -251,19 +251,19 @@ Mount `ToastScope` via `MaterialApp.builder` / `CupertinoApp.builder`.
 
 ### From v2.x
 
-| v2.x | Current |
-|------|---------|
+| v2.x                                              | Current                                                             |
+| ------------------------------------------------- | ------------------------------------------------------------------- |
 | `FlutterToastProWrapper(child: MaterialApp(...))` | `MaterialApp(builder: (c, child) => ToastScope(child: child), ...)` |
-| `FlutterToastPro.showMessage('text')` | `FlutterToastPro.show('text')` |
-| `FlutterToastPro.showSuccessMessage('text')` | `FlutterToastPro.success('text')` |
-| `FlutterToastPro.showWaringMessage('text')` | `FlutterToastPro.warning('text')` |
-| `FlutterToastPro.showErrorMessage('text')` | `FlutterToastPro.error('text')` |
-| `FlutterToastPro.showLoading()` | `FlutterToastPro.loading()` |
-| `FlutterToastPro.showProgress(0.5)` | `FlutterToastPro.progress(0.5)` |
-| `MessageType` | `ToastMessageType` |
-| `ToastUiOptions(...)` | `ToastThemeData(...)` |
-| `EffectType.primary` / `primaryLight` | Removed — colors come from theme / `ColorScheme` fallbacks |
-| `rxdart` | Removed in v3 |
+| `FlutterToastPro.showMessage('text')`             | `FlutterToastPro.show('text')`                                      |
+| `FlutterToastPro.showSuccessMessage('text')`      | `FlutterToastPro.success('text')`                                   |
+| `FlutterToastPro.showWaringMessage('text')`       | `FlutterToastPro.warning('text')`                                   |
+| `FlutterToastPro.showErrorMessage('text')`        | `FlutterToastPro.error('text')`                                     |
+| `FlutterToastPro.showLoading()`                   | `FlutterToastPro.loading()`                                         |
+| `FlutterToastPro.showProgress(0.5)`               | `FlutterToastPro.progress(0.5)`                                     |
+| `MessageType`                                     | `ToastMessageType`                                                  |
+| `ToastUiOptions(...)`                             | `ToastThemeData(...)`                                               |
+| `EffectType.primary` / `primaryLight`             | Removed — colors come from theme / `ColorScheme` fallbacks          |
+| `rxdart`                                          | Removed in v3                                                       |
 
 v4 replaces Flutter SDK widget imports with `material_ui` and `cupertino_ui` (Flutter `>=3.44.0`).
 

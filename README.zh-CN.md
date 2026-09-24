@@ -4,7 +4,7 @@
 
 基于 Overlay 的 Flutter 消息、加载与进度提示。
 
-要求 Flutter `>=3.44.0`，依赖 `material_ui` 与 `cupertino_ui`。
+要求 Flutter `>=3.47.0`，依赖 `material_ui` 与 `cupertino_ui`。
 
 ## 在线演示
 
@@ -25,7 +25,7 @@
 
 ```yaml
 dependencies:
-  flutter_toast_pro: ^4.0.2
+  flutter_toast_pro: ^4.1.0
 ```
 
 ```bash
@@ -98,15 +98,15 @@ FlutterToastPro.hideProgress();
 
 ## 消息 API
 
-| 方法 | 返回值 | 说明 |
-|------|--------|------|
+| 方法                                                                                             | 返回值         | 说明               |
+| ------------------------------------------------------------------------------------------------ | -------------- | ------------------ |
 | `FlutterToastPro.show(message, {type, icon, duration, position, action, swipeToDismiss, extra})` | `Future<void>` | 可配置的消息 Toast |
-| `FlutterToastPro.info(message, {icon, duration, position, action, extra})` | `Future<void>` | 信息 |
-| `FlutterToastPro.success(message, {icon, duration, position, action, extra})` | `Future<void>` | 成功 |
-| `FlutterToastPro.warning(message, {icon, duration, position, action, extra})` | `Future<void>` | 警告 |
-| `FlutterToastPro.error(message, {icon, duration, position, action, extra})` | `Future<void>` | 错误 |
-| `FlutterToastPro.dismiss(id)` | `void` | 按 id 关闭一条 |
-| `FlutterToastPro.dismissAll()` | `void` | 关闭全部 |
+| `FlutterToastPro.info(message, {icon, duration, position, action, extra})`                       | `Future<void>` | 信息               |
+| `FlutterToastPro.success(message, {icon, duration, position, action, extra})`                    | `Future<void>` | 成功               |
+| `FlutterToastPro.warning(message, {icon, duration, position, action, extra})`                    | `Future<void>` | 警告               |
+| `FlutterToastPro.error(message, {icon, duration, position, action, extra})`                      | `Future<void>` | 错误               |
+| `FlutterToastPro.dismiss(id)`                                                                    | `void`         | 按 id 关闭一条     |
+| `FlutterToastPro.dismissAll()`                                                                   | `void`         | 关闭全部           |
 
 消息的 `Future` 在该 Toast 关闭时完成（计时器、启用后的滑动/点击，或 `dismiss` / `dismissAll`）。
 
@@ -114,27 +114,27 @@ FlutterToastPro.hideProgress();
 
 ### 消息参数
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `message` | `String` | 必填 | 显示文本 |
-| `type` | `ToastMessageType` | `info`（仅 `show`） | `info` / `success` / `warning` / `error` |
-| `icon` | `IconData?` | 按类型默认图标 | 左侧图标 |
-| `duration` | `Duration?` | 3 秒 | 自动关闭；省略时按 3 秒处理 |
-| `position` | `ToastPosition?` | `ToastThemeData.position`（`top`） | `top` / `center` / `bottom` |
-| `action` | `ToastAction?` | `null` | 尾部按钮；点击不会自动关闭 |
-| `swipeToDismiss` | `bool` | `true`（仅 `show`） | 与 `ToastThemeData.enableSwipeToDismiss` 同时生效 |
-| `extra` | `Map<String, dynamic>` | `const {}` | 传给自定义 `messageBuilder` |
+| 参数             | 类型                   | 默认值                             | 说明                                              |
+| ---------------- | ---------------------- | ---------------------------------- | ------------------------------------------------- |
+| `message`        | `String`               | 必填                               | 显示文本                                          |
+| `type`           | `ToastMessageType`     | `info`（仅 `show`）                | `info` / `success` / `warning` / `error`          |
+| `icon`           | `IconData?`            | 按类型默认图标                     | 左侧图标                                          |
+| `duration`       | `Duration?`            | 3 秒                               | 自动关闭；省略时按 3 秒处理                       |
+| `position`       | `ToastPosition?`       | `ToastThemeData.position`（`top`） | `top` / `center` / `bottom`                       |
+| `action`         | `ToastAction?`         | `null`                             | 尾部按钮；点击不会自动关闭                        |
+| `swipeToDismiss` | `bool`                 | `true`（仅 `show`）                | 与 `ToastThemeData.enableSwipeToDismiss` 同时生效 |
+| `extra`          | `Map<String, dynamic>` | `const {}`                         | 传给自定义 `messageBuilder`                       |
 
 滑动关闭和点击关闭只有在 `MessageToastTheme.ignorePointer` 为 `false` 时才会生效（主题默认是 `true`）。
 
 ## 加载与进度
 
-| 方法 | 返回值 | 说明 |
-|------|--------|------|
-| `FlutterToastPro.loading({message, position, extra})` | `Future<void>` | 显示加载（`position` 默认 `center`） |
-| `FlutterToastPro.hideLoading()` | `void` | 关闭当前加载 |
-| `FlutterToastPro.progress(value, {message, position, extra})` | `void` | 显示或更新进度（`0.0`–`1.0`） |
-| `FlutterToastPro.hideProgress()` | `void` | 关闭当前进度 |
+| 方法                                                          | 返回值         | 说明                                 |
+| ------------------------------------------------------------- | -------------- | ------------------------------------ |
+| `FlutterToastPro.loading({message, position, extra})`         | `Future<void>` | 显示加载（`position` 默认 `center`） |
+| `FlutterToastPro.hideLoading()`                               | `void`         | 关闭当前加载                         |
+| `FlutterToastPro.progress(value, {message, position, extra})` | `void`         | 显示或更新进度（`0.0`–`1.0`）        |
+| `FlutterToastPro.hideProgress()`                              | `void`         | 关闭当前进度                         |
 
 加载和进度全局唯一：再显示同类型会替换上一条。
 
@@ -236,10 +236,10 @@ MaterialApp(
 dart run skills@ get
 ```
 
-| Skill | 适用场景 |
-|-------|----------|
-| `flutter-toast-pro-setup` | 挂载 `ToastScope`、主题、自定义 builder、`GlassContainer` |
-| `flutter-toast-pro-toasts` | 显示与关闭消息、加载、进度 |
+| Skill                      | 适用场景                                                  |
+| -------------------------- | --------------------------------------------------------- |
+| `flutter-toast-pro-setup`  | 挂载 `ToastScope`、主题、自定义 builder、`GlassContainer` |
+| `flutter-toast-pro-toasts` | 显示与关闭消息、加载、进度                                |
 
 ## 迁移
 
@@ -249,19 +249,19 @@ dart run skills@ get
 
 ### 从 v2.x
 
-| v2.x | 当前 |
-|------|------|
+| v2.x                                              | 当前                                                                |
+| ------------------------------------------------- | ------------------------------------------------------------------- |
 | `FlutterToastProWrapper(child: MaterialApp(...))` | `MaterialApp(builder: (c, child) => ToastScope(child: child), ...)` |
-| `FlutterToastPro.showMessage('text')` | `FlutterToastPro.show('text')` |
-| `FlutterToastPro.showSuccessMessage('text')` | `FlutterToastPro.success('text')` |
-| `FlutterToastPro.showWaringMessage('text')` | `FlutterToastPro.warning('text')` |
-| `FlutterToastPro.showErrorMessage('text')` | `FlutterToastPro.error('text')` |
-| `FlutterToastPro.showLoading()` | `FlutterToastPro.loading()` |
-| `FlutterToastPro.showProgress(0.5)` | `FlutterToastPro.progress(0.5)` |
-| `MessageType` | `ToastMessageType` |
-| `ToastUiOptions(...)` | `ToastThemeData(...)` |
-| `EffectType.primary` / `primaryLight` | 已移除，颜色来自主题 / `ColorScheme` 回退值 |
-| `rxdart` | v3 已移除 |
+| `FlutterToastPro.showMessage('text')`             | `FlutterToastPro.show('text')`                                      |
+| `FlutterToastPro.showSuccessMessage('text')`      | `FlutterToastPro.success('text')`                                   |
+| `FlutterToastPro.showWaringMessage('text')`       | `FlutterToastPro.warning('text')`                                   |
+| `FlutterToastPro.showErrorMessage('text')`        | `FlutterToastPro.error('text')`                                     |
+| `FlutterToastPro.showLoading()`                   | `FlutterToastPro.loading()`                                         |
+| `FlutterToastPro.showProgress(0.5)`               | `FlutterToastPro.progress(0.5)`                                     |
+| `MessageType`                                     | `ToastMessageType`                                                  |
+| `ToastUiOptions(...)`                             | `ToastThemeData(...)`                                               |
+| `EffectType.primary` / `primaryLight`             | 已移除，颜色来自主题 / `ColorScheme` 回退值                         |
+| `rxdart`                                          | v3 已移除                                                           |
 
 v4 将 Flutter SDK 控件 import 替换为 `material_ui` 与 `cupertino_ui`（Flutter `>=3.44.0`）。
 
