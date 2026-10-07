@@ -11,12 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.9
+  cupertino_icons: ^2.0.0
   flutter_toast_pro:
     path: ../
 
-  material_ui: ^1.4.0
-  cupertino_ui: ^1.1.1
+  material_ui: ^1.6.0
+  cupertino_ui: ^1.1.2
   flex_color_scheme: ^9.0.0
 
 dev_dependencies:

@@ -1,6 +1,6 @@
 name: flutter_toast_pro
 description: "Overlay-based toast/loading/progress helper for Flutter apps."
-version: 4.1.0
+version: 4.1.1
 homepage: https://github.com/Matkurban/flutter_toast_pro
 repository: https://github.com/Matkurban/flutter_toast_pro
 topics: [toast, message, loading, progress]
@@ -31,8 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  material_ui: ^1.4.0
-  cupertino_ui: ^1.1.1
+  material_ui: ^1.6.0
+  cupertino_ui: ^1.1.2
 
 dev_dependencies:
   flutter_test:
