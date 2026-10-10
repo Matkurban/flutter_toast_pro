@@ -1,3 +1,7 @@
+## 4.1.2
+
+- Fix `setState() called when widget tree was locked` when a toast is dismissed (e.g. `hideLoading()`) from another widget's `dispose` or during build/layout: overlay and scope updates are deferred to the end of the frame.
+
 ## 4.1.1
 
 - update `material_ui` version to ^1.6.0

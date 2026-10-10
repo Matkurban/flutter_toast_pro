@@ -5,6 +5,7 @@ import 'model/toast_theme.dart';
 import 'toast.dart';
 import 'toast_manager.dart';
 import 'ui/toast_overlay.dart';
+import 'utils/safe_set_state.dart';
 
 /// Root widget that enables the toast system for the subtree below it.
 class ToastScope extends StatefulWidget {
@@ -89,9 +90,7 @@ class _ToastScopeState extends State<ToastScope> {
   void _onManagerChanged() {
     if (_manager.items.isNotEmpty || widget.initialEntries.isNotEmpty) {
       if (!_hasActiveToasts) {
-        setState(() {
-          _hasActiveToasts = true;
-        });
+        setStateSafely(() => _hasActiveToasts = true);
       }
     }
   }
@@ -99,9 +98,7 @@ class _ToastScopeState extends State<ToastScope> {
   void _onOverlayIdle() {
     if (_manager.items.isEmpty && widget.initialEntries.isEmpty) {
       if (_hasActiveToasts) {
-        setState(() {
-          _hasActiveToasts = false;
-        });
+        setStateSafely(() => _hasActiveToasts = false);
       }
     }
   }

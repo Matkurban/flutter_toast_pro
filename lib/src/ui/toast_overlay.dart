@@ -10,6 +10,7 @@ import 'toast_animation.dart';
 import 'toast_loading_widget.dart';
 import 'toast_message_widget.dart';
 import 'toast_progress_widget.dart';
+import '../utils/safe_set_state.dart';
 
 /// Custom builder for message toasts.
 typedef ToastMessageBuilder = Widget Function(BuildContext context, MessageToastItem item);
@@ -92,6 +93,11 @@ class _ToastOverlayState extends State<ToastOverlay> {
 
   void _onManagerChanged() {
     if (!mounted) return;
+    // 例如在别的组件 dispose 里 hideLoading：帧内不能 setState，推迟到本帧结束后再处理。
+    if (isFrameLocked) {
+      runWhenUnlocked(_onManagerChanged);
+      return;
+    }
 
     // Detect removed items and trigger exit animation.
     final currentIds = widget.manager.items.map((t) => t.id).toSet();
@@ -114,8 +120,10 @@ class _ToastOverlayState extends State<ToastOverlay> {
         _dismissing.remove(id);
         _animKeys.remove(id);
         if (mounted) {
-          setState(() {});
-          _checkIdle();
+          setStateSafely(() {});
+          runWhenUnlocked(() {
+            if (mounted) _checkIdle();
+          });
         }
       });
     } else {
